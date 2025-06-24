@@ -1,0 +1,12 @@
+<div class="notes-grid">
+  <div *ngFor="let note of filteredNotes" class="note-card" tabindex="0">
+    <h3>{{ note.title }}</h3>
+    <p>{{ note.content | slice : 0 : 50 }}...</p>
+    <button (click)="archiveNote(note.id)" aria-label="Archive note">
+      Archive
+    </button>
+  </div>
+  <div *ngIf="filteredNotes.length === 0" class="empty-state">
+    <p>No notes found.</p>
+  </div>
+</div>
