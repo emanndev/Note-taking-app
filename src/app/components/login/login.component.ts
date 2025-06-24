@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./auth.component.scss'],
+  styleUrls: ['../../shared/auth.component.scss'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
