@@ -1,1 +1,75 @@
-<p>settings works!</p>
+<div class="settings" role="region" aria-label="Settings panel">
+  <section aria-labelledby="theme-settings">
+    <h2 id="theme-settings">Theme</h2>
+    <label
+      ><input
+        type="radio"
+        name="theme"
+        value="light"
+        (change)="setTheme($event.target.value)"
+        [checked]="theme === 'light'"
+        tabindex="0"
+        aria-label="Light theme"
+      />
+      Light</label
+    >
+    <label
+      ><input
+        type="radio"
+        name="theme"
+        value="dark"
+        (change)="setTheme($event.target.value)"
+        [checked]="theme === 'dark'"
+        tabindex="0"
+        aria-label="Dark theme"
+      />
+      Dark</label
+    >
+  </section>
+  <section aria-labelledby="font-settings">
+    <h2 id="font-settings">Font</h2>
+    <label
+      ><input
+        type="radio"
+        name="font"
+        value="Noto Sans"
+        (change)="setFont($event.target.value)"
+        [checked]="font === 'Noto Sans'"
+        tabindex="0"
+        aria-label="Noto Sans font"
+      />
+      Noto Sans</label
+    >
+    <label
+      ><input
+        type="radio"
+        name="font"
+        value="Noto Serif"
+        (change)="setFont($event.target.value)"
+        [checked]="font === 'Noto Serif'"
+        tabindex="0"
+        aria-label="Noto Serif font"
+      />
+      Noto Serif</label
+    >
+  </section>
+  <section aria-labelledby="password-settings">
+    <h2 id="password-settings">Change Password</h2>
+    <input
+      type="password"
+      [(ngModel)]="newPassword"
+      placeholder="New Password"
+      aria-required="true"
+      tabindex="0"
+      class="input-field"
+    />
+    <button
+      (click)="changePassword()"
+      (keyup.enter)="changePassword()"
+      tabindex="0"
+      aria-label="Change password"
+    >
+      Save
+    </button>
+  </section>
+</div>

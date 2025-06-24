@@ -1,10 +1,44 @@
-<nav class="sidebar" [class.collapsed]="isMobile || sidebarCollapsed">
-  <button (click)="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+<nav
+  class="sidebar"
+  [class.collapsed]="isMobile || sidebarCollapsed"
+  role="navigation"
+  aria-label="Main navigation"
+>
+  <button
+    (click)="toggleSidebar()"
+    (keyup.enter)="toggleSidebar()"
+    tabindex="0"
+    aria-label="Toggle sidebar"
+    aria-expanded="true"
+    class="toggle-btn"
+  >
+    ☰
+  </button>
   <ul>
-    <li><a routerLink="/notes">Notes</a></li>
-    <li><a routerLink="/archived">Archived</a></li>
-    <li><a routerLink="/create">New Note</a></li>
-    <li><a routerLink="/settings">Settings</a></li>
+    <li>
+      <a
+        routerLink="/notes"
+        routerLinkActive="active"
+        tabindex="0"
+        aria-current="page"
+        >Notes</a
+      >
+    </li>
+    <li>
+      <a routerLink="/archived" routerLinkActive="active" tabindex="0"
+        >Archived</a
+      >
+    </li>
+    <li>
+      <a routerLink="/create" routerLinkActive="active" tabindex="0"
+        >New Note</a
+      >
+    </li>
+    <li>
+      <a routerLink="/settings" routerLinkActive="active" tabindex="0"
+        >Settings</a
+      >
+    </li>
   </ul>
 </nav>
 <main>
@@ -15,6 +49,8 @@
       (input)="onSearch()"
       placeholder="Search notes..."
       aria-label="Search notes"
+      tabindex="0"
+      class="search-input"
     />
   </header>
   <router-outlet></router-outlet>

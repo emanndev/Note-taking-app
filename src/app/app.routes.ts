@@ -1,29 +1,30 @@
 import { Routes } from '@angular/router';
+import { NotesDashboardComponent } from './components/notes-dashboard/notes-dashboard.component';
+import { ArchivedNotesComponent } from './components/archived-notes/archived-notes.component';
+import { NoteDetailsComponent } from './components/note-details/note-details.component';
+import { NoteCreateComponent } from './components/note-create/note-create.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 export const routes: Routes = [
   {
     path: 'notes',
-    loadComponent: () =>
-      import('./components/notes-dashboard/notes-dashboard.component'),
+    component: NotesDashboardComponent,
   },
   {
     path: 'archived',
-    loadComponent: () =>
-      import('./components/archived-notes/archived-notes.component'),
+    component: ArchivedNotesComponent,
   },
   {
     path: 'notes/:id',
-    loadComponent: () =>
-      import('./components/note-details/note-details.component'),
+    component: NoteDetailsComponent,
   },
   {
     path: 'create',
-    loadComponent: () =>
-      import('./components/note-create/note-create.component'),
+    component: NoteCreateComponent,
   },
   {
     path: 'settings',
-    loadComponent: () => import('./components/settings/settings.component'),
+    component: SettingsComponent,
   },
   { path: '', redirectTo: '/notes', pathMatch: 'full' },
 ];
