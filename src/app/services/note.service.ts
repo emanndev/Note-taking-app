@@ -35,9 +35,9 @@ export class NoteService {
     }
   }
 
-  deleteNote(id: string) {
-    this.notes = this.notes.filter((note) => note.id !== id);
-  }
+  // deleteNote(id: string) {
+  //   this.notes = this.notes.filter((note) => note.id !== id);
+  // }
 
   archiveNote(id: string, archive: boolean) {
     const note = this.getNoteById(id);
@@ -66,5 +66,13 @@ export class NoteService {
       }
     });
     return Array.from(tags).sort();
+  }
+
+  deleteNote(id: string): void {
+    const noteIndex = this.notes.findIndex((note) => note.id === id);
+    if (noteIndex !== -1) {
+      this.notes.splice(noteIndex, 1);
+      // this.saveNotes();
+    }
   }
 }
