@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NoteService } from './services/note.service';
 import { ThemeService } from './services/theme.service';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isMobile = window.innerWidth < 768;
   sidebarCollapsed = false;
   searchQuery = '';
@@ -20,7 +20,9 @@ export class AppComponent {
   constructor(
     public noteService: NoteService,
     public themeService: ThemeService
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.initializeTheme();
     this.onSearch();
   }
