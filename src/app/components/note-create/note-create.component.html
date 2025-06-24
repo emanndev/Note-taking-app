@@ -1,10 +1,10 @@
 <form
   #noteForm="ngForm"
-  (ngSubmit)="onSubmit()"
+  (ngSubmit)="onSubmit(noteForm)"
   role="form"
-  aria-labelledby="note-form-title"
+  aria-labelledby="note-create-title"
 >
-  <h2 id="note-form-title">Create New Note</h2>
+  <h2 id="note-create-title">Create New Note</h2>
   <input
     name="title"
     [(ngModel)]="note.title"
@@ -35,7 +35,7 @@
     type="submit"
     [disabled]="noteForm.invalid"
     tabindex="0"
-    aria-label="Save note"
+    aria-label="Save new note"
   >
     Save
   </button>

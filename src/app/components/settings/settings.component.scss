@@ -16,9 +16,9 @@ $spacing-unit: 16px;
 
     label {
       display: block;
-      margin-bottom: $spacing-unit / 2;
+
       input {
-        margin-right: $spacing-unit / 2;
+        margin-right: $spacing-unit;
       }
       &:focus-within {
         outline: 2px solid $primary-color;
@@ -27,7 +27,7 @@ $spacing-unit: 16px;
 
     .input-field {
       width: 100%;
-      padding: $spacing-unit / 2;
+
       margin-bottom: $spacing-unit;
       border: 1px solid #ccc;
       border-radius: 4px;
@@ -40,10 +40,10 @@ $spacing-unit: 16px;
       background: $primary-color;
       color: white;
       border: none;
-      padding: $spacing-unit / 2;
+
       border-radius: 4px;
       &:focus {
-        outline: 2px solid darken($primary-color, 10%);
+        outline: 2px solid color.adjust($primary-color, $lightness: -10%);
       }
     }
   }

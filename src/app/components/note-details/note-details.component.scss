@@ -11,7 +11,7 @@ form {
   .input-field,
   .textarea-field {
     width: 100%;
-    padding: $spacing-unit / 2;
+    padding: 20px;
     margin-bottom: $spacing-unit;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -33,11 +33,10 @@ form {
     display: flex;
     gap: $spacing-unit;
     button {
-      padding: $spacing-unit / 2;
       border-radius: 4px;
       border: none;
       &:focus {
-        outline: 2px solid darken($primary-color, 10%);
+        outline: 2px solid color.adjust($primary-color, $lightness: -10%);
       }
       &:first-child {
         background: $primary-color;

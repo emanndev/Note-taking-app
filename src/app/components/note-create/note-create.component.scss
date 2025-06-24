@@ -1,5 +1,6 @@
 $input-bg: #e1e8ed;
 $primary-color: #1da1f2;
+$spacing-unit: 16px;
 
 form {
   max-width: 600px;
@@ -9,7 +10,7 @@ form {
   .input-field,
   .textarea-field {
     width: 100%;
-    padding: $spacing-unit / 2;
+
     margin-bottom: $spacing-unit;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -31,10 +32,10 @@ form {
     background: $primary-color;
     color: white;
     border: none;
-    padding: $spacing-unit / 2;
+
     border-radius: 4px;
     &:focus {
-      outline: 2px solid darken($primary-color, 10%);
+      outline: 2px solid color.adjust($primary-color, $lightness: -10%);
     }
     &:disabled {
       background: #aab8c2;

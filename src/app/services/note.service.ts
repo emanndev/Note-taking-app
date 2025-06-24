@@ -10,25 +10,29 @@ export class NoteService {
   createNote(note: Note) {
     note.id = Date.now().toString();
     note.createdAt = new Date();
+    note.lastEdited = new Date();
     this.notes.push(note);
     return note;
   }
 
-  getNotes() {
+  getNotes(): Note[] {
     return this.notes.filter((note) => !note.isArchived);
   }
 
-  getArchivedNotes() {
+  getArchivedNotes(): Note[] {
     return this.notes.filter((note) => note.isArchived);
   }
 
-  getNoteById(id: string) {
+  getNoteById(id: string): Note | undefined {
     return this.notes.find((note) => note.id === id);
   }
 
   updateNote(updatedNote: Note) {
     const index = this.notes.findIndex((note) => note.id === updatedNote.id);
-    if (index !== -1) this.notes[index] = updatedNote;
+    if (index !== -1) {
+      updatedNote.lastEdited = new Date();
+      this.notes[index] = updatedNote;
+    }
   }
 
   deleteNote(id: string) {
@@ -37,15 +41,30 @@ export class NoteService {
 
   archiveNote(id: string, archive: boolean) {
     const note = this.getNoteById(id);
-    if (note) note.isArchived = archive;
+    if (note) {
+      note.isArchived = archive;
+      note.lastEdited = new Date();
+    }
   }
 
-  filterNotes(query: string) {
+  filterNotes(query: string): Note[] {
+    const lowercaseQuery = query.toLowerCase();
     return this.notes.filter(
       (note) =>
-        note.title.toLowerCase().includes(query.toLowerCase()) ||
-        note.content.toLowerCase().includes(query.toLowerCase()) ||
-        note.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+        !note.isArchived &&
+        (note.title.toLowerCase().includes(lowercaseQuery) ||
+          note.content.toLowerCase().includes(lowercaseQuery) ||
+          note.tags.some((tag) => tag.toLowerCase().includes(lowercaseQuery)))
     );
+  }
+
+  getAllTags(): string[] {
+    const tags = new Set<string>();
+    this.notes.forEach((note) => {
+      if (!note.isArchived) {
+        note.tags.forEach((tag) => tags.add(tag));
+      }
+    });
+    return Array.from(tags).sort();
   }
 }

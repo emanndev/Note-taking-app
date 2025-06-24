@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoteService } from '../../services/note.service';
 import { FormsModule } from '@angular/forms';
+import { NgForm } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-note-details',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './note-details.component.html',
   styleUrls: ['./note-details.component.scss'],
 })
@@ -17,7 +19,7 @@ export class NoteDetailsComponent implements OnInit {
     content: '',
     tags: [],
     isArchived: false,
-    createdAt: new Date(),
+    createdAt: new Date('2025-06-24T13:20:00Z'),
   };
 
   constructor(
@@ -29,11 +31,12 @@ export class NoteDetailsComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.note = this.noteService.getNoteById(id) || this.note;
+      const foundNote = this.noteService.getNoteById(id);
+      if (foundNote) this.note = { ...foundNote };
     }
   }
 
-  onSave(form: any) {
+  onSave(form: NgForm) {
     if (form.valid) {
       this.noteService.updateNote(this.note);
       this.router.navigate(['/notes']);

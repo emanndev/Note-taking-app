@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NoteService } from '../../services/note.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-archived-notes',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './archived-notes.component.html',
   styleUrls: ['./archived-notes.component.scss'],
 })

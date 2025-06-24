@@ -1,48 +1,190 @@
-$card-bg: #f5f8fa;
-$spacing-unit: 16px;
+.notes-dashboard {
+  height: 100%;
+  overflow: hidden;
+}
 
-.notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: $spacing-unit;
-  padding: $spacing-unit;
+.note-detail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
 
-  .note-card {
-    background: $card-bg;
-    padding: $spacing-unit;
-    border-radius: 8px;
-    cursor: pointer;
-    &:focus {
-      outline: 2px solid $primary-color;
+  .note-header {
+    padding: 24px 32px 16px;
+    border-bottom: 1px solid #e1e5e9;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+
+    .note-title {
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0;
+      color: #1a1a1a;
+      flex: 1;
+      line-height: 1.2;
     }
-    button {
-      background: $primary-color;
-      color: white;
-      border: none;
-      padding: $spacing-unit / 2;
-      border-radius: 4px;
-      &:focus {
-        outline: 2px solid darken($primary-color, 10%);
+
+    .note-actions {
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+
+      .action-btn {
+        padding: 8px 16px;
+        border: 1px solid #e1e5e9;
+        background: white;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        gap: 6px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          border-color: #ccc;
+          background: #f8f9fa;
+        }
+
+        &.archive-btn:hover {
+          border-color: #1976d2;
+          color: #1976d2;
+        }
+
+        &.delete-btn:hover {
+          border-color: #d32f2f;
+          color: #d32f2f;
+        }
       }
     }
   }
 
-  .empty-state {
-    text-align: center;
-    padding: $spacing-unit * 2;
-    color: #657786;
+  .note-meta {
+    padding: 0 32px 16px;
+    display: flex;
+    gap: 24px;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .meta-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+      }
+
+      .meta-value {
+        font-size: 14px;
+        color: #1a1a1a;
+      }
+
+      .tags-container {
+        display: flex;
+        gap: 6px;
+
+        .tag {
+          padding: 2px 8px;
+          background: #e3f2fd;
+          color: #1976d2;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+    }
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  .note-content {
+    flex: 1;
+    padding: 24px 32px;
+    overflow-y: auto;
+
+    pre {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+    }
+  }
+
+  .note-footer {
+    padding: 16px 32px;
+    border-top: 1px solid #e1e5e9;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+
+    .save-btn {
+      padding: 10px 20px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background: #3367d6;
+      }
+    }
+
+    .cancel-btn {
+      padding: 10px 20px;
+      background: none;
+      color: #666;
+      border: 1px solid #e1e5e9;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #ccc;
+        background: #f8f9fa;
+      }
+    }
   }
 }
 
-[data-theme="dark"] {
-  .note-card {
-    background: #1c252d;
-  }
-  .empty-state {
-    color: #aab8c2;
+.empty-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+
+  .empty-state-content {
+    text-align: center;
+    color: #666;
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 0 0 8px 0;
+      color: #1a1a1a;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 0;
+      color: #666;
+    }
   }
 }
