@@ -1,1 +1,43 @@
-<p>signup works!</p>
+<div class="auth-container">
+  <div class="auth-card">
+    <img src="/assets/logo.svg" alt="Logo" class="logo" />
+    <h2>Create Your Account</h2>
+    <p>Sign up to start organizing your notes and boost your productivity.</p>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <label>Email Address</label>
+      <input
+        type="email"
+        placeholder="email@example.com"
+        formControlName="email"
+      />
+      <div
+        class="error"
+        *ngIf="
+          signupForm.get('email')?.invalid && signupForm.get('email')?.touched
+        "
+      >
+        Valid email required
+      </div>
+
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+      <p class="hint">🔒 At least 8 characters</p>
+
+      <button type="submit" [disabled]="signupForm.invalid">Sign up</button>
+    </form>
+
+    <div class="divider">Or log in with:</div>
+    <button class="google-btn"><span class="g-icon">G</span> Google</button>
+
+    <p class="auth-footer">
+      Already have an account? <a routerLink="/login">Login</a>
+    </p>
+  </div>
+</div>
