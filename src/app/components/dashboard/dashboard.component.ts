@@ -10,13 +10,7 @@ import { Note } from '../../models/note.interface';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    FormsModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-  ],
+  imports: [FormsModule, RouterOutlet, RouterLink, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -28,6 +22,7 @@ export class DashboardComponent implements OnInit {
   selectedNoteId: string | null = null;
   currentSection: 'all' | 'archived' = 'all';
   selectedTag: string | null = null;
+  hasSearchResults = true; // Track if search has results
 
   constructor(
     public noteService: NoteService,
@@ -48,11 +43,13 @@ export class DashboardComponent implements OnInit {
   onSearch() {
     if (this.searchQuery.trim()) {
       this.filteredNotes = this.noteService.filterNotes(this.searchQuery);
+      this.hasSearchResults = this.filteredNotes.length > 0;
     } else {
       this.filteredNotes =
         this.currentSection === 'all'
           ? this.noteService.getNotes()
           : this.noteService.getArchivedNotes();
+      this.hasSearchResults = true; // Reset when no search query
     }
   }
 
@@ -65,6 +62,7 @@ export class DashboardComponent implements OnInit {
     this.currentSection = section;
     this.selectedTag = null;
     this.searchQuery = '';
+    this.hasSearchResults = true;
     this.onSearch();
   }
 
@@ -77,6 +75,7 @@ export class DashboardComponent implements OnInit {
       this.filteredNotes = this.noteService
         .getNotes()
         .filter((note) => note.tags.includes(tag));
+      this.hasSearchResults = this.filteredNotes.length > 0;
     }
   }
 
@@ -101,10 +100,31 @@ export class DashboardComponent implements OnInit {
   }
 
   getPageTitle(): string {
+    // If searching and has results, show search results title
+    if (this.searchQuery.trim()) {
+      return `Showing results for: ${this.searchQuery}`;
+    }
+
+    // If filtering by tag
     if (this.selectedTag) {
       return `Notes tagged with "${this.selectedTag}"`;
     }
+
+    // Default section titles
     return this.currentSection === 'all' ? 'All Notes' : 'Archived Notes';
+  }
+
+  // Check if we should show the no results message
+  shouldShowNoResults(): boolean | string {
+    return this.searchQuery.trim() && !this.hasSearchResults;
+  }
+
+  // Clear search and return to all notes
+  clearSearch() {
+    this.searchQuery = '';
+    this.selectedTag = null;
+    this.hasSearchResults = true;
+    this.onSearch();
   }
 
   formatDate(date: Date): string {

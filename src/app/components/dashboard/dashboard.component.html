@@ -34,6 +34,7 @@
 
     <!-- Notes List -->
     <div class="notes-list" *ngIf="!sidebarCollapsed">
+      <!-- Show notes if there are results or no search query -->
       <div
         *ngFor="let note of getVisibleNotes()"
         class="note-item"
@@ -49,6 +50,21 @@
           </span>
           <span class="note-date">{{ formatDate(note.lastEdited) }}</span>
         </div>
+      </div>
+
+      <!-- No Results Message -->
+      <div class="no-results" *ngIf="shouldShowNoResults()">
+        <div class="no-results-icon">🔍</div>
+        <h4 class="no-results-title">No notes match your search</h4>
+        <p class="no-results-text">
+          Try a different keyword or
+          <button class="link-button" routerLink="/dashboard/create">
+            create a new note
+          </button>
+        </p>
+        <button class="clear-search-btn" (click)="clearSearch()">
+          Clear search
+        </button>
       </div>
     </div>
 
@@ -98,6 +114,15 @@
             class="search-input"
           />
           <span class="search-icon">🔍</span>
+          <!-- Clear search button when searching -->
+          <button
+            *ngIf="searchQuery.trim()"
+            class="clear-search-icon"
+            (click)="clearSearch()"
+            title="Clear search"
+          >
+            ×
+          </button>
         </div>
         <button class="settings-btn" routerLink="/dashboard/settings">
           ⚙️
@@ -107,6 +132,25 @@
 
     <!-- Content Area -->
     <div class="content-area">
+      <div
+        class="main-no-results"
+        *ngIf="shouldShowNoResults() && sidebarCollapsed"
+      >
+        <div class="no-results-content">
+          <div class="no-results-icon">🔍</div>
+          <h2 class="no-results-title">No notes match your search</h2>
+          <p class="no-results-text">
+            Try a different keyword or
+            <button class="link-button" routerLink="/dashboard/create">
+              create a new note
+            </button>
+          </p>
+          <button class="clear-search-btn" (click)="clearSearch()">
+            Clear search
+          </button>
+        </div>
+      </div>
+
       <router-outlet></router-outlet>
     </div>
   </main>
