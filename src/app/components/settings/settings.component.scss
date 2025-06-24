@@ -42,9 +42,6 @@ $spacing-unit: 16px;
       border: none;
 
       border-radius: 4px;
-      &:focus {
-        outline: 2px solid color.adjust($primary-color, $lightness: -10%);
-      }
     }
   }
 }
