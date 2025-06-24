@@ -1,18 +1,92 @@
+$primary-color: #1da1f2; // From design system
+$bg-color: #ffffff;
+$dark-bg: #15202b;
+$spacing-unit: 16px;
+$breakpoint-mobile: 768px;
+
 .sidebar {
   width: 250px;
-  /* Add responsive styles */
-  @media (max-width: 768px) {
+  background: $bg-color;
+  padding: $spacing-unit;
+  transition: width 0.3s;
+  font-family: "Noto Sans", sans-serif; // Design system font
+
+  &.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
     width: 100%;
     &.collapsed {
       display: none;
     }
+    ul {
+      flex-direction: column;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      padding: $spacing-unit / 2;
+      display: block;
+      &:focus,
+      &:hover {
+        background: lighten($primary-color, 40%);
+        outline: 2px solid $primary-color;
+      }
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
   }
 }
+
 main {
   margin-left: 250px;
-}
-@media (max-width: 768px) {
-  main {
+  background: $bg-color;
+  min-height: 100vh;
+
+  @media (max-width: $breakpoint-mobile) {
     margin-left: 0;
+  }
+
+  header {
+    padding: $spacing-unit;
+    .search-input {
+      width: 100%;
+      max-width: 400px;
+      padding: $spacing-unit / 2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      &:focus {
+        outline: 2px solid $primary-color;
+      }
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .sidebar,
+  main {
+    background: $dark-bg;
+  }
+  .sidebar a {
+    color: #1da1f2;
   }
 }

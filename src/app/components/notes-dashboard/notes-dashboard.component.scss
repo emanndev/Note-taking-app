@@ -1,0 +1,48 @@
+$card-bg: #f5f8fa;
+$spacing-unit: 16px;
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: $spacing-unit;
+  padding: $spacing-unit;
+
+  .note-card {
+    background: $card-bg;
+    padding: $spacing-unit;
+    border-radius: 8px;
+    cursor: pointer;
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
+    button {
+      background: $primary-color;
+      color: white;
+      border: none;
+      padding: $spacing-unit / 2;
+      border-radius: 4px;
+      &:focus {
+        outline: 2px solid darken($primary-color, 10%);
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: $spacing-unit * 2;
+    color: #657786;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme="dark"] {
+  .note-card {
+    background: #1c252d;
+  }
+  .empty-state {
+    color: #aab8c2;
+  }
+}

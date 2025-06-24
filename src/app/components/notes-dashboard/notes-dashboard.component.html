@@ -1,12 +1,28 @@
-<div class="notes-grid">
-  <div *ngFor="let note of filteredNotes" class="note-card" tabindex="0">
-    <h3>{{ note.title }}</h3>
+<div class="notes-grid" role="region" aria-label="Active notes list">
+  <div
+    *ngFor="let note of filteredNotes"
+    class="note-card"
+    tabindex="0"
+    role="article"
+    aria-labelledby="note-{{ note.id }}"
+  >
+    <h3 id="note-{{ note.id }}">{{ note.title }}</h3>
     <p>{{ note.content | slice : 0 : 50 }}...</p>
-    <button (click)="archiveNote(note.id)" aria-label="Archive note">
+    <button
+      (click)="archiveNote(note.id)"
+      (keyup.enter)="archiveNote(note.id)"
+      tabindex="0"
+      aria-label="Archive {{ note.title }}"
+    >
       Archive
     </button>
   </div>
-  <div *ngIf="filteredNotes.length === 0" class="empty-state">
+  <div
+    *ngIf="filteredNotes.length === 0"
+    class="empty-state"
+    role="alert"
+    aria-live="polite"
+  >
     <p>No notes found.</p>
   </div>
 </div>
