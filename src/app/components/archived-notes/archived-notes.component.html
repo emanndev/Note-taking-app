@@ -1,0 +1,28 @@
+<div class="archived-grid" role="region" aria-label="Archived notes list">
+  <div
+    *ngFor="let note of archivedNotes"
+    class="note-card"
+    tabindex="0"
+    role="article"
+    aria-labelledby="archived-note-{{ note.id }}"
+  >
+    <h3 id="archived-note-{{ note.id }}">{{ note.title }}</h3>
+    <p>{{ note.content | slice : 0 : 50 }}...</p>
+    <button
+      (click)="unarchiveNote(note.id)"
+      (keyup.enter)="unarchiveNote(note.id)"
+      tabindex="0"
+      aria-label="Unarchive {{ note.title }}"
+    >
+      Unarchive
+    </button>
+  </div>
+  <div
+    *ngIf="archivedNotes.length === 0"
+    class="empty-state"
+    role="alert"
+    aria-live="polite"
+  >
+    <p>No archived notes found.</p>
+  </div>
+</div>
