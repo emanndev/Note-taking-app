@@ -1,0 +1,18 @@
+.sidebar {
+  width: 250px;
+  /* Add responsive styles */
+  @media (max-width: 768px) {
+    width: 100%;
+    &.collapsed {
+      display: none;
+    }
+  }
+}
+main {
+  margin-left: 250px;
+}
+@media (max-width: 768px) {
+  main {
+    margin-left: 0;
+  }
+}
