@@ -1,0 +1,87 @@
+<div class="note-create-container">
+  <div class="note-form">
+    <!-- Note Title -->
+    <div class="form-group title-group">
+      <input
+        type="text"
+        [(ngModel)]="note.title"
+        placeholder="Enter a title..."
+        class="title-input"
+        maxlength="100"
+      />
+    </div>
+
+    <!-- Note Metadata -->
+    <div class="note-metadata">
+      <!-- Tags Section -->
+      <div class="metadata-row">
+        <span class="metadata-icon">🏷️</span>
+        <span class="metadata-label">Tags</span>
+        <div class="metadata-value">
+          <input
+            type="text"
+            #tagInput
+            placeholder="Add tags separated by commas (e.g. Work, Planning)"
+            class="tags-input"
+            (keyup.enter)="
+              addTagsFromInput(tagInput.value); tagInput.value = ''
+            "
+            (blur)="addTagsFromInput(tagInput.value); tagInput.value = ''"
+          />
+          <div class="current-tags" *ngIf="note.tags.length > 0">
+            <span *ngFor="let tag of note.tags; let i = index" class="tag">
+              {{ tag }}
+              <button
+                type="button"
+                class="remove-tag"
+                (click)="removeTag(i)"
+                aria-label="Remove tag"
+              >
+                ×
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Last Edited Section -->
+      <div class="metadata-row">
+        <span class="metadata-icon">🕒</span>
+        <span class="metadata-label">Last edited</span>
+        <div class="metadata-value">
+          <span class="last-edited">{{ getLastEditedText() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Note Content -->
+    <div class="form-group content-group">
+      <textarea
+        [(ngModel)]="note.content"
+        placeholder="Start typing your note here..."
+        class="content-textarea"
+        rows="20"
+        (input)="onContentChange()"
+      ></textarea>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-primary save-btn"
+        (click)="saveNote()"
+        [disabled]="!note.title.trim()"
+      >
+        Save Note
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary cancel-btn"
+        (click)="cancelCreation()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
