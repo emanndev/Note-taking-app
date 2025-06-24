@@ -1,0 +1,23 @@
+<form #noteForm="ngForm" (ngSubmit)="onSubmit()">
+  <input
+    name="title"
+    [(ngModel)]="note.title"
+    required
+    #title="ngModel"
+    placeholder="Title"
+  />
+  <div *ngIf="title.invalid && title.touched" class="error">
+    Title is required.
+  </div>
+  <textarea
+    name="content"
+    [(ngModel)]="note.content"
+    required
+    #content="ngModel"
+    placeholder="Content"
+  ></textarea>
+  <div *ngIf="content.invalid && content.touched" class="error">
+    Content is required.
+  </div>
+  <button type="submit" [disabled]="noteForm.invalid">Save</button>
+</form>
