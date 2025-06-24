@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NoteService } from '../../services/note.service';
-import { Pipe } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notes-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './notes-dashboard.component.html',
   styleUrls: ['./notes-dashboard.component.scss'],
 })

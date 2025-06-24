@@ -1,4 +1,4 @@
-$primary-color: #1da1f2; // From design system
+$primary-color: #1da1f2;
 $bg-color: #ffffff;
 $dark-bg: #15202b;
 $spacing-unit: 16px;
@@ -9,7 +9,7 @@ $breakpoint-mobile: 768px;
   background: $bg-color;
   padding: $spacing-unit;
   transition: width 0.3s;
-  font-family: "Noto Sans", sans-serif; // Design system font
+  font-family: "Noto Sans", sans-serif;
 
   &.collapsed {
     width: 0;
