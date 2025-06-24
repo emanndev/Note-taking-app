@@ -1,0 +1,67 @@
+$input-bg: #e1e8ed;
+$primary-color: #1da1f2;
+$danger-color: #e0245e;
+$spacing-unit: 16px;
+
+form {
+  max-width: 600px;
+  margin: $spacing-unit auto;
+  padding: $spacing-unit;
+
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    padding: $spacing-unit / 2;
+    margin-bottom: $spacing-unit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    &:focus {
+      outline: 2px solid $primary-color;
+    }
+  }
+
+  .textarea-field {
+    min-height: 150px;
+  }
+
+  .error {
+    color: $danger-color;
+    margin-bottom: $spacing-unit;
+  }
+
+  .actions {
+    display: flex;
+    gap: $spacing-unit;
+    button {
+      padding: $spacing-unit / 2;
+      border-radius: 4px;
+      border: none;
+      &:focus {
+        outline: 2px solid darken($primary-color, 10%);
+      }
+      &:first-child {
+        background: $primary-color;
+        color: white;
+        &:disabled {
+          background: #aab8c2;
+          cursor: not-allowed;
+        }
+      }
+      &:last-child {
+        background: $danger-color;
+        color: white;
+      }
+    }
+  }
+}
+
+[data-theme="dark"] {
+  .input-field,
+  .textarea-field {
+    background: #1c252d;
+    border-color: #38444c;
+  }
+  .error {
+    color: #ff6f91;
+  }
+}
