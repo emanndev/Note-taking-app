@@ -1,27 +1,127 @@
-<div class="archived-grid" role="region" aria-label="Archived notes list">
-  <div
-    *ngFor="let note of archivedNotes"
-    class="note-card"
-    tabindex="0"
-    role="article"
-    [attr.aria-labelledby]="'archived-note-' + note.id"
-  >
-    <h3 id="archived-note-{{ note.id }}">{{ note.title }}</h3>
-    <p>{{ note.content | slice : 0 : 50 }}...</p>
-    <button
-      (click)="unarchiveNote(note.id)"
-      (keyup.enter)="unarchiveNote(note.id)"
-      tabindex="0"
-    >
-      Unarchive
-    </button>
+<div class="archived-notes-container">
+  <!-- Left Panel - Archived Notes List -->
+  <div class="archived-notes-panel">
+    <div class="panel-header">
+      <div class="header-info">
+        <p class="info-text">
+          All your archived notes are stored here. You can restore or delete
+          them anytime.
+        </p>
+      </div>
+    </div>
+
+    <div class="notes-list">
+      <div
+        *ngFor="let note of archivedNotes"
+        class="note-card"
+        [class.selected]="selectedNote?.id === note.id"
+        (click)="selectNote(note)"
+        tabindex="0"
+        role="article"
+        [attr.aria-labelledby]="'archived-note-' + note.id"
+      >
+        <h3 id="archived-note-{{ note.id }}" class="note-title">
+          {{ note.title }}
+        </h3>
+        <div class="note-tags">
+          <span *ngFor="let tag of note.tags" class="tag">{{ tag }}</span>
+        </div>
+        <div class="note-date">{{ formatDate(note.lastEdited) }}</div>
+      </div>
+
+      <div
+        *ngIf="archivedNotes.length === 0"
+        class="empty-state"
+        role="alert"
+        aria-live="polite"
+      >
+        <div class="empty-icon">📁</div>
+        <h3>No archived notes</h3>
+        <p>Your archived notes will appear here.</p>
+      </div>
+    </div>
   </div>
+
+  <!-- Right Panel - Note Details -->
+  <div class="note-details-panel" *ngIf="selectedNote">
+    <div class="note-header">
+      <h1 class="note-title">{{ selectedNote.title }}</h1>
+
+      <div class="note-actions">
+        <button
+          class="action-btn restore-btn"
+          (click)="restoreNote(selectedNote.id)"
+          title="Restore Note"
+        >
+          <span class="btn-icon">↶</span>
+          Restore Note
+        </button>
+        <button
+          class="action-btn delete-btn"
+          (click)="deleteNote(selectedNote.id)"
+          title="Delete Note"
+        >
+          <span class="btn-icon">🗑</span>
+          Delete Note
+        </button>
+      </div>
+    </div>
+
+    <div class="note-metadata">
+      <div class="metadata-item">
+        <span class="metadata-icon">🏷️</span>
+        <span class="metadata-label">Tags</span>
+        <div class="metadata-value">
+          <span *ngFor="let tag of selectedNote.tags" class="tag">{{
+            tag
+          }}</span>
+          <span *ngIf="selectedNote.tags.length === 0" class="no-tags"
+            >No tags</span
+          >
+        </div>
+      </div>
+
+      <div class="metadata-item">
+        <span class="metadata-icon">📊</span>
+        <span class="metadata-label">Status</span>
+        <div class="metadata-value">
+          <span class="status archived">Archived</span>
+        </div>
+      </div>
+
+      <div class="metadata-item">
+        <span class="metadata-icon">🕒</span>
+        <span class="metadata-label">Last edited</span>
+        <div class="metadata-value">
+          {{ formatDate(selectedNote.lastEdited) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="note-content">
+      <div class="content-preview">{{ selectedNote.content }}</div>
+    </div>
+
+    <div class="note-footer">
+      <button class="btn btn-primary" (click)="restoreNote(selectedNote.id)">
+        Restore Note
+      </button>
+      <button class="btn btn-secondary" (click)="closeDetails()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Placeholder when no note is selected -->
   <div
-    *ngIf="archivedNotes.length === 0"
-    class="empty-state"
-    role="alert"
-    aria-live="polite"
+    class="note-details-panel placeholder"
+    *ngIf="!selectedNote && archivedNotes.length > 0"
   >
-    <p>No archived notes found.</p>
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📋</div>
+      <h3>Select a note to view details</h3>
+      <p>
+        Choose an archived note from the list to see its content and restore or
+        delete it.
+      </p>
+    </div>
   </div>
 </div>
