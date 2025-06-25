@@ -14,7 +14,7 @@ import { Note } from '../../models/note.interface';
 })
 export class NotesDashboardComponent implements OnInit {
   selectedNote: Note | null = null;
-  originalNote: Note | null = null; // Keep track of original for cancel functionality
+  originalNote: Note | null = null;
   isEditing = false;
   editableNote: Partial<Note> = {};
 
@@ -61,6 +61,10 @@ export class NotesDashboardComponent implements OnInit {
   }
 
   saveNote() {
+    if (!this.editableNote.title?.trim()) {
+      alert('Please enter a title for your note.');
+      return;
+    }
     if (
       this.selectedNote &&
       this.editableNote.title &&

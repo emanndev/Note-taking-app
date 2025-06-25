@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Note } from '../../models/note.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-note-create',
@@ -66,7 +67,7 @@ export class NoteCreateComponent {
     }
 
     const noteToSave: Note = {
-      id: '',
+      id: uuidv4(),
       title: this.note.title,
       content: this.note.content,
       tags: this.note.tags,
