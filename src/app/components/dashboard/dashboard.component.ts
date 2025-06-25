@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NoteService } from '../../services/note.service';
 import { ThemeService } from '../../services/theme.service';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Note } from '../../models/note.interface';
 
@@ -27,12 +27,14 @@ export class DashboardComponent implements OnInit {
   constructor(
     public noteService: NoteService,
     public themeService: ThemeService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.initializeSampleData();
     this.onSearch();
+    // Trigger change detection after notes are loaded
+    setTimeout(() => this.cdr.detectChanges(), 1000);
   }
 
   toggleSidebar() {
@@ -94,16 +96,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getPageTitle(): string {
-    // If searching and has results, show search results title
     if (this.searchQuery.trim()) {
       return `Showing results for: ${this.searchQuery}`;
     }
-
-    // If filtering by tag
     if (this.selectedTag) {
       return `Notes tagged with "${this.selectedTag}"`;
     }
-
     return this.currentSection === 'all' ? 'All Notes' : 'Archived Notes';
   }
 
@@ -121,78 +119,14 @@ export class DashboardComponent implements OnInit {
   formatDate(date: Date): string {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-
+    const diffDays = Math.ceil(diffTime / (1000 * 3600 * 24));
+    if (diffDays === 1) return 'Today';
+    if (diffDays === 2) return 'Yesterday';
+    if (diffDays <= 7) return `${diffDays} days ago`;
     return date.toLocaleDateString('en-US', {
-      day: 'numeric',
       month: 'short',
+      day: 'numeric',
       year: 'numeric',
     });
-  }
-
-  private initializeSampleData() {
-    if (this.noteService.getNotes().length === 0) {
-      const sampleNotes: Partial<Note>[] = [
-        {
-          title: 'React Performance Optimization',
-          content:
-            'Key performance optimization techniques:\n\n1. Code Splitting\n- Use React.lazy() for route-based splitting\n- Implement dynamic imports for heavy components\n\n2. Memoization\n- useMemo for expensive calculations\n- useCallback for function props\n- React.memo for component optimization\n\n3. Virtual List Implementation\n- Use react-window for long lists\n- Implement infinite scrolling\n\nTODO: Benchmark current application and identify bottlenecks',
-          tags: ['Dev', 'React'],
-          isArchived: false,
-        },
-        {
-          title: 'Japan Travel Planning',
-          content: 'Tokyo itinerary and travel tips for upcoming trip',
-          tags: ['Travel', 'Personal'],
-          isArchived: false,
-        },
-        {
-          title: 'Favorite Pasta Recipes',
-          content: 'Collection of my favorite pasta recipes',
-          tags: ['Cooking', 'Recipes'],
-          isArchived: false,
-        },
-        {
-          title: 'Weekly Workout Plan',
-          content: 'Monday: Upper body\nTuesday: Cardio\nWednesday: Lower body',
-          tags: ['Dev', 'React'],
-          isArchived: false,
-        },
-        {
-          title: 'Meal Prep Ideas',
-          content: 'Healthy meal prep recipes for the week',
-          tags: ['Cooking', 'Health', 'Recipes'],
-          isArchived: false,
-        },
-        {
-          title: 'Reading List',
-          content: 'Books to read this year',
-          tags: ['Personal', 'Dev'],
-          isArchived: false,
-        },
-        {
-          title: 'Fitness Goals 2025',
-          content: 'My fitness objectives for this year',
-          tags: ['Fitness', 'Health', 'Personal'],
-          isArchived: false,
-        },
-      ];
-
-      sampleNotes.forEach((noteData) => {
-        const note: Note = {
-          id: '',
-          title: noteData.title!,
-          content: noteData.content!,
-          tags: noteData.tags!,
-          createdAt: new Date(),
-          lastEdited: new Date(),
-          isArchived: noteData.isArchived!,
-        };
-        this.noteService.createNote(note);
-      });
-    }
   }
 }
