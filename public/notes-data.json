@@ -1,0 +1,44 @@
+[
+  {
+    "title": "React Performance Optimization",
+    "content": "Key performance optimization techniques:\n\n1. Code Splitting\n- Use React.lazy() for route-based splitting\n- Implement dynamic imports for heavy components\n\n2. Memoization\n- useMemo for expensive calculations\n- useCallback for function props\n- React.memo for component optimization\n\n3. Virtual List Implementation\n- Use react-window for long lists\n- Implement infinite scrolling\n\nTODO: Benchmark current application and identify bottlenecks",
+    "tags": ["Dev", "React"],
+    "isArchived": false
+  },
+  {
+    "title": "Japan Travel Planning",
+    "content": "Tokyo itinerary and travel tips for upcoming trip",
+    "tags": ["Travel", "Personal"],
+    "isArchived": false
+  },
+  {
+    "title": "Favorite Pasta Recipes",
+    "content": "Collection of my favorite pasta recipes",
+    "tags": ["Cooking", "Recipes"],
+    "isArchived": false
+  },
+  {
+    "title": "Weekly Workout Plan",
+    "content": "Monday: Upper body\nTuesday: Cardio\nWednesday: Lower body",
+    "tags": ["Dev", "React"],
+    "isArchived": false
+  },
+  {
+    "title": "Meal Prep Ideas",
+    "content": "Healthy meal prep recipes for the week",
+    "tags": ["Cooking", "Health", "Recipes"],
+    "isArchived": false
+  },
+  {
+    "title": "Reading List",
+    "content": "Books to read this year",
+    "tags": ["Personal", "Dev"],
+    "isArchived": false
+  },
+  {
+    "title": "Fitness Goals 2025",
+    "content": "My fitness objectives for this year",
+    "tags": ["Fitness", "Health", "Personal"],
+    "isArchived": false
+  }
+]
