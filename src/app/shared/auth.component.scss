@@ -17,7 +17,7 @@
   text-align: center;
 
   .logo {
-    width: 48px;
+    width: 6rem;
     margin-bottom: 16px;
   }
 
@@ -161,7 +161,6 @@
   }
 }
 
-// Dark theme specific adjustments
 [data-theme="dark"] {
   .auth-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
