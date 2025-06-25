@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Note } from '../models/note.interface';
 import { v4 as uuidv4 } from 'uuid';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +11,9 @@ import { v4 as uuidv4 } from 'uuid';
 export class NoteService {
   private notes: Note[] = [];
   private readonly STORAGE_KEY = 'notes';
+  private readonly notesData = 'assets/data/sample-notes.json';
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.loadNotes();
   }
 
@@ -18,14 +22,34 @@ export class NoteService {
   }
 
   private loadNotes() {
-    const storeNotes = localStorage.getItem(this.STORAGE_KEY);
-    if (storeNotes) {
-      this.notes = JSON.parse(storeNotes);
+    const storedNotes = localStorage.getItem(this.STORAGE_KEY);
+    if (storedNotes) {
+      this.notes = JSON.parse(storedNotes);
       this.notes = this.notes.map((note) => ({
         ...note,
         createdAt: new Date(note.createdAt),
         lastEdited: new Date(note.lastEdited),
       }));
+    } else {
+      this.http.get<Partial<Note>[]>(this.notesData).subscribe({
+        next: (sampleNotes) => {
+          sampleNotes.forEach((noteData) => {
+            const note: Note = {
+              id: '',
+              title: noteData.title!,
+              content: noteData.content!,
+              tags: noteData.tags || [],
+              createdAt: new Date(),
+              lastEdited: new Date(),
+              isArchived: noteData.isArchived || false,
+            };
+            this.createNote(note);
+          });
+        },
+        error: (error) => {
+          console.error('Failed to load sample notes:', error);
+        },
+      });
     }
   }
 
