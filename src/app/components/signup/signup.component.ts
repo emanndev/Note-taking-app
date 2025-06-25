@@ -17,6 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  formPassword: string = '';
+  showformPassword: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.signupForm = this.fb.group({

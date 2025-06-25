@@ -81,13 +81,8 @@ export class SettingsComponent {
 
   logout() {
     if (confirm('Are you sure you want to logout?')) {
-      // Here you would typically:
-      // 1. Clear any stored authentication tokens
-      // 2. Clear user session data
-      // 3. Navigate to login page
-
       console.log('User logged out');
-      this.router.navigate(['/login']); // Adjust route as needed
+      this.router.navigate(['/login']);
     }
   }
 }
