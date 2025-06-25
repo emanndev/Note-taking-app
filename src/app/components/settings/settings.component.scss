@@ -1,57 +1,346 @@
-$input-bg: #e1e8ed;
-$primary-color: #1da1f2;
-$spacing-unit: 16px;
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
-.settings {
-  max-width: 400px;
-  margin: $spacing-unit auto;
-  padding: $spacing-unit;
+.settings-content {
+  background: var(--bg-color, #ffffff);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-  section {
-    margin-bottom: $spacing-unit * 2;
+.settings-section {
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
 
-    h2 {
-      margin-bottom: $spacing-unit;
-    }
+  &:last-child {
+    border-bottom: none;
+  }
+}
 
-    label {
-      display: block;
+.settings-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  color: var(--text-color, #374151);
 
-      input {
-        margin-right: $spacing-unit;
-      }
-      &:focus-within {
-        outline: 2px solid $primary-color;
-      }
-    }
+  &:hover {
+    background-color: var(--hover-bg, #f9fafb);
+  }
 
-    .input-field {
-      width: 100%;
+  &.active {
+    background-color: var(--active-bg, #f3f4f6);
+  }
 
-      margin-bottom: $spacing-unit;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      &:focus {
-        outline: 2px solid $primary-color;
-      }
-    }
+  &.logout-option {
+    color: #dc2626;
 
-    button {
-      background: $primary-color;
-      color: white;
-      border: none;
-
-      border-radius: 4px;
+    &:hover {
+      background-color: #fef2f2;
     }
   }
 }
 
-[data-theme="dark"] {
-  .settings {
-    background: #1c252d;
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.option-icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.option-text {
+  font-weight: 500;
+}
+
+.expand-arrow {
+  font-size: 18px;
+  transition: transform 0.2s ease;
+  color: var(--text-secondary, #6b7280);
+
+  &.expanded {
+    transform: rotate(90deg);
   }
-  .input-field {
-    background: #1c252d;
-    border-color: #38444c;
+}
+
+.settings-panel {
+  padding: 24px 20px;
+  background-color: var(--panel-bg, #f9fafb);
+  border-top: 1px solid var(--border-color, #e5e7eb);
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color, #111827);
+  }
+
+  .panel-description {
+    margin: 0 0 20px 0;
+    color: var(--text-secondary, #6b7280);
+    font-size: 14px;
+  }
+}
+
+// Theme Options
+.theme-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-color, #3b82f6);
+  }
+
+  &.selected {
+    border-color: var(--primary-color, #3b82f6);
+    background-color: var(--primary-bg, #eff6ff);
+  }
+
+  input[type="radio"] {
+    margin-right: 12px;
+    accent-color: var(--primary-color, #3b82f6);
+    scale: 1.2;
+  }
+}
+
+.theme-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.theme-icon {
+  font-size: 24px;
+}
+
+.theme-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-name {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-color, #111827);
+}
+
+.theme-description {
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+}
+
+// Font Options
+.font-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.font-option {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--primary-color, #3b82f6);
+  }
+
+  &.selected {
+    border-color: var(--primary-color, #3b82f6);
+    background-color: var(--primary-bg, #eff6ff);
+  }
+
+  input[type="radio"] {
+    margin-right: 12px;
+    accent-color: var(--primary-color, #3b82f6);
+    scale: 1.2;
+  }
+}
+
+.font-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.font-sample {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-color, #111827);
+
+  &.serif {
+    font-family: "Times New Roman", serif;
+  }
+
+  &.mono {
+    font-family: "Monaco", "Courier New", monospace;
+  }
+}
+
+.font-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.font-name {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-color, #111827);
+}
+
+.font-description {
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+}
+
+// Password Form
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-weight: 500;
+    color: var(--text-color, #374151);
+    font-size: 14px;
+  }
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 2px solid var(--border-color, #e5e7eb);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  background-color: var(--input-bg, #ffffff);
+  color: var(--text-color, #374151);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color, #3b82f6);
+  }
+
+  &::placeholder {
+    color: var(--text-placeholder, #9ca3af);
+  }
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  color: var(--text-secondary, #6b7280);
+
+  &:hover {
+    color: var(--text-color, #374151);
+  }
+}
+
+.password-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.hint-icon {
+  font-size: 14px;
+}
+
+// Buttons
+.apply-btn,
+.save-password-btn {
+  background-color: var(--primary-color, #3b82f6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--primary-hover, #2563eb);
+  }
+
+  &:disabled {
+    background-color: var(--disabled-bg, #9ca3af);
+    cursor: not-allowed;
+  }
+}
+
+.save-password-btn {
+  align-self: flex-start;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 16px;
+  }
+
+  .settings-panel {
+    padding: 20px 16px;
+  }
+
+  .theme-options,
+  .font-options {
+    gap: 8px;
+  }
+
+  .theme-option,
+  .font-option {
+    padding: 10px;
   }
 }
