@@ -67,7 +67,7 @@ export class NoteCreateComponent {
     }
 
     const noteToSave: Note = {
-      id: uuidv4(),
+      id: '',
       title: this.note.title,
       content: this.note.content,
       tags: this.note.tags,

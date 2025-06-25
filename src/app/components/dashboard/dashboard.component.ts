@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   selectedNoteId: string | null = null;
   currentSection: 'all' | 'archived' = 'all';
   selectedTag: string | null = null;
-  hasSearchResults = true; // Track if search has results
+  hasSearchResults = true;
 
   constructor(
     public noteService: NoteService,
@@ -31,7 +31,6 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Initialize with some sample data if no notes exist
     this.initializeSampleData();
     this.onSearch();
   }
@@ -49,7 +48,7 @@ export class DashboardComponent implements OnInit {
         this.currentSection === 'all'
           ? this.noteService.getNotes()
           : this.noteService.getArchivedNotes();
-      this.hasSearchResults = true; // Reset when no search query
+      this.hasSearchResults = true;
     }
   }
 
@@ -91,12 +90,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAllTags(): string[] {
-    const allNotes = this.noteService.getNotes();
-    const tags = new Set<string>();
-    allNotes.forEach((note) => {
-      note.tags.forEach((tag) => tags.add(tag));
-    });
-    return Array.from(tags).sort();
+    return this.noteService.getAllTags();
   }
 
   getPageTitle(): string {
@@ -110,16 +104,13 @@ export class DashboardComponent implements OnInit {
       return `Notes tagged with "${this.selectedTag}"`;
     }
 
-    // Default section titles
     return this.currentSection === 'all' ? 'All Notes' : 'Archived Notes';
   }
 
-  // Check if we should show the no results message
   shouldShowNoResults(): boolean | string {
     return this.searchQuery.trim() && !this.hasSearchResults;
   }
 
-  // Clear search and return to all notes
   clearSearch() {
     this.searchQuery = '';
     this.selectedTag = null;
@@ -143,7 +134,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private initializeSampleData() {
-    // Add sample notes if none exist
     if (this.noteService.getNotes().length === 0) {
       const sampleNotes: Partial<Note>[] = [
         {

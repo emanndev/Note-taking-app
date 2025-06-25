@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Note } from '../models/note.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +30,10 @@ export class NoteService {
   }
 
   createNote(note: Note) {
-    note.id = Date.now().toString();
+    note.id = uuidv4();
     note.createdAt = new Date();
     note.lastEdited = new Date();
+    note.tags = note.tags || [];
     this.notes.push(note);
     this.saveNotes();
     return note;
@@ -67,11 +69,11 @@ export class NoteService {
     }
   }
 
-  filterNotes(query: string): Note[] {
+  filterNotes(query: string, includeArchived: boolean = false): Note[] {
     const lowercaseQuery = query.toLowerCase();
     return this.notes.filter(
       (note) =>
-        !note.isArchived &&
+        (includeArchived || !note.isArchived) &&
         (note.title.toLowerCase().includes(lowercaseQuery) ||
           note.content.toLowerCase().includes(lowercaseQuery) ||
           note.tags.some((tag) => tag.toLowerCase().includes(lowercaseQuery)))
