@@ -429,7 +429,15 @@
 
 .content-area {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
+
+  &.create-note-view {
+    padding: 2rem;
+    background: #f8f9fa;
+  }
+  router-outlet + * {
+    height: 100%;
+  }
 }
 
 /* Responsive Design */
