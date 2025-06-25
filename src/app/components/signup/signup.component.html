@@ -17,7 +17,12 @@
           signupForm.get('email')?.invalid && signupForm.get('email')?.touched
         "
       >
-        Valid email required
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon red-icon"
+        />
+        Please enter a valid email address.
       </div>
 
       <label>Password</label>
@@ -50,7 +55,12 @@
       </div>
 
       <p class="hint">
-        <img src="/assets/images/icon-info.svg" alt="" /> At least 8 characters
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon"
+        />
+        At least 8 characters
       </p>
 
       <button type="submit" [disabled]="signupForm.invalid">Sign up</button>

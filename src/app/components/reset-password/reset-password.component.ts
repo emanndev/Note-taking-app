@@ -16,6 +16,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ResetPasswordComponent {
   form: FormGroup;
+  formNewPassword: string = '';
+  formConfirmPassword: string = '';
+  showFormNewPassword: boolean = false;
+  showFormConfirmPassword: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group(

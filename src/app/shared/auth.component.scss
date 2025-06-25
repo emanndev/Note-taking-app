@@ -101,16 +101,19 @@
       font-size: 12px;
       color: var(--text-secondary);
       margin-top: 4px;
-
-      img {
-        position: relative;
-        top: 3px;
-        margin-right: 4px;
-        width: 15px;
-        opacity: 0.7;
-      }
     }
 
+    .info-icon {
+      position: relative;
+      top: 3px;
+      margin-right: 4px;
+      width: 15px;
+      opacity: 0.7;
+    }
+    .info-icon.red-icon {
+      filter: invert(21%) sepia(99%) saturate(7484%) hue-rotate(357deg)
+        brightness(88%) contrast(114%);
+    }
     .error {
       color: var(--danger-color);
       font-size: 12px;
@@ -187,8 +190,9 @@
   .forgot-link {
     float: right;
     font-size: 12px;
-    color: var(--accent-color);
-    text-decoration: none;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #374151;
 
     &:hover {
       color: var(--accent-hover);

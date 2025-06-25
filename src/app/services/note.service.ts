@@ -6,12 +6,34 @@ import { Note } from '../models/note.interface';
 })
 export class NoteService {
   private notes: Note[] = [];
+  private readonly STORAGE_KEY = 'notes';
+
+  constructor() {
+    this.loadNotes();
+  }
+
+  private saveNotes() {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.notes));
+  }
+
+  private loadNotes() {
+    const storeNotes = localStorage.getItem(this.STORAGE_KEY);
+    if (storeNotes) {
+      this.notes = JSON.parse(storeNotes);
+      this.notes = this.notes.map((note) => ({
+        ...note,
+        createdAt: new Date(note.createdAt),
+        lastEdited: new Date(note.lastEdited),
+      }));
+    }
+  }
 
   createNote(note: Note) {
     note.id = Date.now().toString();
     note.createdAt = new Date();
     note.lastEdited = new Date();
     this.notes.push(note);
+    this.saveNotes();
     return note;
   }
 
@@ -32,18 +54,16 @@ export class NoteService {
     if (index !== -1) {
       updatedNote.lastEdited = new Date();
       this.notes[index] = updatedNote;
+      this.saveNotes();
     }
   }
-
-  // deleteNote(id: string) {
-  //   this.notes = this.notes.filter((note) => note.id !== id);
-  // }
 
   archiveNote(id: string, archive: boolean) {
     const note = this.getNoteById(id);
     if (note) {
       note.isArchived = archive;
       note.lastEdited = new Date();
+      this.saveNotes();
     }
   }
 
@@ -72,7 +92,7 @@ export class NoteService {
     const noteIndex = this.notes.findIndex((note) => note.id === id);
     if (noteIndex !== -1) {
       this.notes.splice(noteIndex, 1);
-      // this.saveNotes();
+      this.saveNotes();
     }
   }
 }

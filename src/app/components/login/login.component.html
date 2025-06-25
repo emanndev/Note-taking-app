@@ -11,8 +11,24 @@
         placeholder="email@example.com"
         formControlName="email"
       />
+      <div
+        class="error"
+        *ngIf="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+      >
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon red-icon"
+        />
+        Please enter a valid email address.
+      </div>
 
-      <label>Password <a class="forgot-link">Forgot</a></label>
+      <label
+        >Password
+        <a class="forgot-link" routerLink="/forgot-password">Forgot</a></label
+      >
       <div class="password-wrapper">
         <input
           type="password"
@@ -25,7 +41,12 @@
     </form>
 
     <div class="divider">Or log in with:</div>
-    <button class="google-btn"><span class="g-icon">G</span> Google</button>
+    <button class="google-btn">
+      <span class="g-icon"
+        ><img src="/assets/images/icon-google.svg" alt="google-icon"
+      /></span>
+      Google
+    </button>
 
     <p class="auth-footer">
       No account yet? <a routerLink="/signup">Sign Up</a>
