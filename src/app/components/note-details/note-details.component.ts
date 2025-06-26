@@ -32,7 +32,6 @@ export class NoteDetailsComponent implements OnInit {
           this.selectedNote = { ...note };
           this.originalNote = { ...note };
         } else {
-          // Note not found, redirect to notes list
           this.router.navigate(['/dashboard/notes']);
         }
       } else {
@@ -63,7 +62,6 @@ export class NoteDetailsComponent implements OnInit {
     if (this.selectedNote) {
       this.noteService.updateNote(this.selectedNote);
       this.originalNote = { ...this.selectedNote };
-      // Show success message or feedback
       console.log('Note saved successfully');
     }
   }
@@ -72,6 +70,7 @@ export class NoteDetailsComponent implements OnInit {
     if (this.originalNote) {
       this.selectedNote = { ...this.originalNote };
     }
+    this.router.navigate(['/dashboard/notes']);
   }
 
   addTag() {
@@ -98,7 +97,6 @@ export class NoteDetailsComponent implements OnInit {
 
   archiveNote(id: string) {
     this.noteService.archiveNote(id, true);
-    // Navigate to next available note or empty state
     const notes = this.noteService.getNotes();
     if (notes.length > 0) {
       this.router.navigate(['/dashboard/notes', notes[0].id]);
@@ -111,7 +109,6 @@ export class NoteDetailsComponent implements OnInit {
   deleteNote(id: string) {
     if (confirm('Are you sure you want to delete this note?')) {
       this.noteService.deleteNote(id);
-      // Navigate to next available note or empty state
       const notes = this.noteService.getNotes();
       if (notes.length > 0) {
         this.router.navigate(['/dashboard/notes', notes[0].id]);

@@ -45,15 +45,12 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.checkScreenSize();
 
-    // Subscribe to notes changes from the service
     this.noteService.notes$.subscribe(() => {
-      this.onSearch(); // Refresh filtered notes when notes are updated
+      this.onSearch();
     });
 
-    // Initial search to populate filtered notes
     this.onSearch();
 
-    // Listen for route changes to update selected note
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.noteService.setSelectedNoteId(params['id']);
@@ -110,7 +107,6 @@ export class DashboardComponent implements OnInit {
     this.searchQuery = '';
     this.onSearch();
 
-    // Navigate to appropriate route
     if (section === 'all') {
       this.router.navigate(['/dashboard/notes']);
     } else {

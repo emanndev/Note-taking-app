@@ -31,11 +31,9 @@ export class NotesDashboardComponent implements OnInit {
   ngOnInit() {
     this.checkScreenSize();
 
-    // Check if we have notes and redirect to first note if none selected
     this.route.params.subscribe((params) => {
       this.selectedNoteId = params['id'] || null;
 
-      // Auto-select first note on desktop if none selected
       if (!this.selectedNoteId && !this.isMobile) {
         const notes = this.noteService.getNotes();
         if (notes.length > 0) {
@@ -66,7 +64,6 @@ export class NotesDashboardComponent implements OnInit {
   }
 
   goBack() {
-    // On mobile, go back to notes list view
     this.selectedNoteId = null;
     this.router.navigate(['/dashboard/notes']);
   }

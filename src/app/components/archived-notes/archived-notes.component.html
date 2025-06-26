@@ -69,7 +69,9 @@
 
     <div class="note-metadata">
       <div class="metadata-item">
-        <span class="metadata-icon">🏷️</span>
+        <span class="metadata-icon"
+          ><img src="./assets/images/icon-tag.svg" alt="tag-icon"
+        /></span>
         <span class="metadata-label">Tags</span>
         <div class="metadata-value">
           <span *ngFor="let tag of selectedNote.tags" class="tag">{{
@@ -82,7 +84,9 @@
       </div>
 
       <div class="metadata-item">
-        <span class="metadata-icon">📊</span>
+        <span class="metadata-icon"
+          ><img src="./assets/images/icon-status.svg" alt="status-icon"
+        /></span>
         <span class="metadata-label">Status</span>
         <div class="metadata-value">
           <span class="status archived">Archived</span>
@@ -90,7 +94,9 @@
       </div>
 
       <div class="metadata-item">
-        <span class="metadata-icon">🕒</span>
+        <span class="metadata-icon"
+          ><img src="./assets/images/icon-clock.svg" alt=""
+        /></span>
         <span class="metadata-label">Last edited</span>
         <div class="metadata-value">
           {{ formatDate(selectedNote.lastEdited) }}
