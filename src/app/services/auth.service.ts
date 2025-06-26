@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private tokenKey = 'authToken';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: Auth) {}
 
-  //saving token in localstorage
-  login(): void {
-    localStorage.setItem(this.tokenKey, 'myFakeToken');
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  //removing token from localstorage
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
+  signup(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  //checking if token is present to authenticate user
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
-    return token !== null;
+  logout() {
+    signOut(this.auth).then(() => {
+      this.router.navigate(['login']);
+    });
+  }
+
+  get currentUser() {
+    return this.auth.currentUser;
   }
 }
