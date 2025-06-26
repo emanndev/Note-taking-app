@@ -15,14 +15,15 @@
           (click)="archiveNote(selectedNote.id)"
           [attr.aria-label]="'Archive ' + selectedNote.title"
         >
-          📁 Archive Note
+          <img src="./assets/images/icon-archive.svg" alt="archive-icon" />
+          Archive Note
         </button>
         <button
           class="action-btn delete-btn"
           (click)="deleteNote(selectedNote.id)"
           [attr.aria-label]="'Delete ' + selectedNote.title"
         >
-          🗑️ Delete Note
+          <img src="./assets/images/icon-delete.svg" alt="" /> Delete Note
         </button>
       </div>
     </div>

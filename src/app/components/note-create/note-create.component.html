@@ -1,67 +1,93 @@
-<div class="note-create-container">
-  <div class="note-form">
-    <!-- Note Title -->
-    <div class="form-group title-group">
-      <input
-        type="text"
-        placeholder="Enter a title..."
-        class="title-input"
-        maxlength="100"
-      />
-    </div>
+<div class="note-create-wrapper">
+  <div class="note-create-container">
+    <div class="note-form">
+      <!-- Note Title -->
+      <div class="form-group title-group">
+        <input
+          type="text"
+          [(ngModel)]="note.title"
+          placeholder="Enter a title..."
+          class="title-input"
+          maxlength="100"
+          (input)="onContentChange()"
+        />
+      </div>
 
-    <!-- Note Metadata -->
-    <div class="note-metadata">
-      <!-- Tags Section -->
-      <div class="metadata-row">
-        <span class="metadata-icon">🏷️</span>
-        <span class="metadata-label">Tags</span>
-        <div class="metadata-value">
-          <input
-            type="text"
-            placeholder="Add tags separated by commas (e.g. Work, Planning)"
-            class="tags-input"
-          />
-          <div class="current-tags">
-            <span class="tag">
-              Dev
-              <button type="button" class="remove-tag" aria-label="Remove tag">
-                ×
-              </button>
-            </span>
-            <span class="tag">
-              Angular
-              <button type="button" class="remove-tag" aria-label="Remove tag">
-                ×
-              </button>
-            </span>
+      <div class="note-metadata">
+        <!-- Tags Section -->
+        <div class="metadata-row">
+          <span class="metadata-icon"
+            ><img src="./assets/images/icon-tag.svg" alt=""
+          /></span>
+          <span class="metadata-label">Tags</span>
+          <div class="metadata-value">
+            <input
+              type="text"
+              #tagsInput
+              placeholder="Add tags separated by commas (e.g. Work, Planning)"
+              class="tags-input"
+              (keyup.enter)="
+                addTagsFromInput(tagsInput.value); tagsInput.value = ''
+              "
+              (blur)="addTagsFromInput(tagsInput.value); tagsInput.value = ''"
+            />
+            <div class="current-tags" *ngIf="note.tags.length > 0">
+              <span class="tag" *ngFor="let tag of note.tags; let i = index">
+                {{ tag }}
+                <button
+                  type="button"
+                  class="remove-tag"
+                  aria-label="Remove tag"
+                  (click)="removeTag(i)"
+                >
+                  ×
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Last Edited Section -->
+        <div class="metadata-row">
+          <span class="metadata-icon"
+            ><img src="./assets/images/icon-clock.svg" alt=""
+          /></span>
+          <span class="metadata-label">Last edited</span>
+          <div class="metadata-value">
+            <span class="last-edited">{{ getLastEditedText() }}</span>
           </div>
         </div>
       </div>
 
-      <!-- Last Edited Section -->
-      <div class="metadata-row">
-        <span class="metadata-icon">🕒</span>
-        <span class="metadata-label">Last edited</span>
-        <div class="metadata-value">
-          <span class="last-edited">Not yet saved</span>
-        </div>
+      <!-- Note Content -->
+      <div class="form-group content-group">
+        <textarea
+          [(ngModel)]="note.content"
+          placeholder="Start typing your note here..."
+          class="content-textarea"
+          rows="20"
+          (input)="onContentChange()"
+        ></textarea>
       </div>
-    </div>
 
-    <!-- Note Content -->
-    <div class="form-group content-group">
-      <textarea
-        placeholder="Start typing your note here..."
-        class="content-textarea"
-        rows="20"
-      ></textarea>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="form-actions">
-      <button type="button" class="btn btn-primary save-btn">Save Note</button>
-      <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-primary save-btn"
+          (click)="saveNote()"
+          [disabled]="!note.title.trim()"
+        >
+          Save Note
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary cancel-btn"
+          (click)="cancelCreation()"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
 </div>

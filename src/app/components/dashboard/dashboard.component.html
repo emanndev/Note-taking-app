@@ -8,15 +8,12 @@
     [isMobileHidden]="isMobile && !showMobileSidebar"
     [showMobileClose]="isMobile"
     (sectionChange)="setCurrentSection($event)"
-    (noteSelect)="selectNote($event)"
     (tagFilter)="filterByTag($event)"
-    (createNote)="createNewNote()"
     (closeMobileSidebar)="closeMobileSidebar()"
   ></app-sidebar>
 
   <!-- Main Content -->
   <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
-    <!-- Header -->
     <header class="main-header">
       <div class="header-left">
         <button class="sidebar-toggle" (click)="toggleSidebar()">
@@ -34,19 +31,21 @@
             placeholder="Search by title, content, or tags..."
             class="search-input"
           />
-          <span class="search-icon">🔍</span>
+          <span class="search-icon"
+            ><img src="./assets/images/icon-search.svg" alt="search-icon"
+          /></span>
         </div>
-        <button class="settings-btn" (click)="openSettings()">⚙️</button>
+        <button class="settings-btn" (click)="openSettings()">
+          <img src="./assets/images/icon-settings.svg" alt="settings-icon" />
+        </button>
       </div>
     </header>
 
-    <!-- Content Area -->
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
   </main>
 
-  <!-- Mobile Sidebar Overlay -->
   <div
     class="mobile-overlay"
     *ngIf="isMobile && showMobileSidebar"

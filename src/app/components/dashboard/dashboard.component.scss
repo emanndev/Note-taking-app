@@ -121,18 +121,23 @@
         }
 
         &::placeholder {
-          color: #9ca3af;
+          color: #929baa;
+          position: absolute;
+          top: 50%;
+          left: 45px;
+          transform: translateY(-50%);
         }
       }
 
       .search-icon {
         position: absolute;
-        right: 12px;
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
-        color: #9ca3af;
-        font-size: 16px;
+        color: #d1d5db;
+
         pointer-events: none;
+        opacity: 0.5;
       }
     }
 

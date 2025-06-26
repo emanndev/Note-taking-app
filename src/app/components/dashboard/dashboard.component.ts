@@ -1,9 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  Router,
+  ActivatedRoute,
+  RouterOutlet,
+  RouterLink,
+} from '@angular/router';
 import { NoteService } from '../../services/note.service';
 import { ThemeService } from '../../services/theme.service';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Note } from '../../models/note.interface';
@@ -15,7 +19,6 @@ import { Note } from '../../models/note.interface';
     FormsModule,
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
     CommonModule,
     SidebarComponent,
   ],
@@ -53,7 +56,7 @@ export class DashboardComponent implements OnInit {
     // Listen for route changes to update selected note
     this.route.params.subscribe((params) => {
       if (params['id']) {
-        this.selectedNoteId = params['id'];
+        this.noteService.setSelectedNoteId(params['id']);
       }
     });
   }
@@ -87,10 +90,12 @@ export class DashboardComponent implements OnInit {
     if (this.searchQuery.trim()) {
       this.filteredNotes = this.noteService.filterNotes(this.searchQuery);
     } else {
-      this.filteredNotes =
+      const notes =
         this.currentSection === 'all'
           ? this.noteService.getNotes()
           : this.noteService.getArchivedNotes();
+
+      this.noteService.setFilteredNotes(notes);
     }
   }
 

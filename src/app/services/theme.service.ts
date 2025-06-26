@@ -9,7 +9,6 @@ export class ThemeService {
   private systemThemeListener?: MediaQueryList;
 
   constructor() {
-    // Initialize with saved preferences or defaults
     this.loadSavedPreferences();
   }
 
@@ -44,8 +43,6 @@ export class ThemeService {
 
     // Save preference
     localStorage.setItem('theme', theme);
-
-    // Emit theme change event for other components to listen to
     window.dispatchEvent(
       new CustomEvent('themeChanged', { detail: { theme } })
     );
@@ -53,8 +50,6 @@ export class ThemeService {
 
   setFont(font: string) {
     this.font = font;
-
-    // Map font names to actual font families
     const fontMap: { [key: string]: string } = {
       'Noto Sans':
         '"Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -109,8 +104,6 @@ export class ThemeService {
       // Default to system preference if no saved theme
       this.setTheme('system');
     }
-
-    // Load saved font
     const savedFont = localStorage.getItem('font');
     if (
       savedFont &&
@@ -122,12 +115,9 @@ export class ThemeService {
     }
   }
 
-  // Utility method to check if dark mode is active
   isDarkMode(): boolean {
     return this.getCurrentTheme() === 'dark';
   }
-
-  // Utility method to toggle between light and dark (ignoring system)
   toggleTheme() {
     const newTheme = this.getCurrentTheme() === 'dark' ? 'light' : 'dark';
     this.setTheme(newTheme);

@@ -1,0 +1,40 @@
+<div class="notes-list-container">
+  <!-- Create New Note Button -->
+  <div class="create-note-section">
+    <button class="create-note-btn" (click)="createNewNote()">
+      + Create New Note
+    </button>
+  </div>
+
+  <!-- Notes List -->
+  <div class="notes-list">
+    <div
+      *ngFor="let note of getVisibleNotes()"
+      class="note-item"
+      [class.active]="selectedNoteId === note.id"
+      (click)="selectNote(note.id)"
+    >
+      <h4 class="note-title">{{ note.title }}</h4>
+      <div class="note-meta">
+        <span class="note-tags">
+          <span *ngFor="let tag of note.tags; let last = last" class="tag">
+            {{ tag }}<span *ngIf="!last">, </span>
+          </span>
+        </span>
+        <span class="note-date">{{ formatDate(note.lastEdited) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="getVisibleNotes().length === 0">
+    <div class="empty-state-content">
+      <div class="empty-icon">📝</div>
+      <h3>No notes found</h3>
+      <p *ngIf="currentSection === 'all'">
+        Create your first note to get started
+      </p>
+      <p *ngIf="currentSection === 'archived'">No archived notes yet</p>
+    </div>
+  </div>
+</div>

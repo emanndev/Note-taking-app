@@ -1,16 +1,26 @@
 <div class="notes-dashboard">
-  <!-- This will display the note details component based on routing -->
-  <router-outlet></router-outlet>
+  <div class="notes-panel" [class.mobile-hidden]="isMobile && selectedNoteId">
+    <app-notes-list
+      [selectedNoteId]="selectedNoteId"
+      [currentSection]="currentSection"
+      [selectedTag]="selectedTag"
+      [filteredNotes]="filteredNotes"
+      (noteSelect)="selectNote($event)"
+      (createNote)="createNewNote()"
+    ></app-notes-list>
+  </div>
 
-  <!-- Empty State when no notes exist -->
-  <div class="empty-state" *ngIf="noteService.getNotes().length === 0">
-    <div class="empty-state-content">
-      <div class="empty-icon">📝</div>
-      <h2>No notes yet</h2>
-      <p>Create your first note to get started</p>
-      <button class="create-first-note-btn" (click)="createNewNote()">
-        Create Your First Note
+  <div class="content-panel" [class.mobile-full]="isMobile && selectedNoteId">
+    <!-- Mobile Back Button -->
+    <div class="mobile-header" *ngIf="isMobile && selectedNoteId">
+      <button class="back-btn" (click)="goBack()">
+        <span class="back-icon">‹</span>
+        Back to Notes
       </button>
+    </div>
+
+    <div class="note-content">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

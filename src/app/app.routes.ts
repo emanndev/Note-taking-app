@@ -30,8 +30,9 @@ export const routes: Routes = [
       { path: 'settings', component: SettingsComponent },
     ],
   },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
-  // Default redirects
+  //redirects routes
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'notes', redirectTo: '/dashboard/notes', pathMatch: 'full' },
   { path: 'create', redirectTo: '/dashboard/create', pathMatch: 'full' },

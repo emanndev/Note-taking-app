@@ -11,9 +11,13 @@ import { map, tap } from 'rxjs/operators';
 export class NoteService {
   private notes: Note[] = [];
   private readonly STORAGE_KEY = 'notes-app-data';
-  private readonly notesData = 'assets/data/sample-notes.json';
+  private readonly notesData = 'notes-data.json';
   private notesSubject = new BehaviorSubject<Note[]>([]);
   public notes$ = this.notesSubject.asObservable();
+  private filteredNotesSubject = new BehaviorSubject<Note[]>([]);
+  public filteredNotes$ = this.filteredNotesSubject.asObservable();
+  private selectedNoteIdSubject = new BehaviorSubject<string | null>(null);
+  public selectedNoteId$ = this.selectedNoteIdSubject.asObservable();
 
   constructor(private http: HttpClient) {
     this.loadNotes();
@@ -22,10 +26,9 @@ export class NoteService {
   private saveNotes() {
     try {
       const notesData = JSON.stringify(this.notes);
-      // Store in memory for demo purposes (since localStorage isn't available in artifacts)
-      // In a real app, you would use: localStorage.setItem(this.STORAGE_KEY, notesData);
       console.log('Notes saved to storage:', this.notes.length, 'notes');
       this.notesSubject.next([...this.notes]);
+      this.updateFilteredNotes();
     } catch (error) {
       console.error('Failed to save notes:', error);
     }
@@ -33,9 +36,7 @@ export class NoteService {
 
   private loadNotes() {
     try {
-      // In a real app, you would use: localStorage.getItem(this.STORAGE_KEY)
-      // For demo purposes, we'll initialize with empty array and load sample data
-      const storedNotes = null; // localStorage.getItem(this.STORAGE_KEY);
+      const storedNotes = null;
 
       if (storedNotes) {
         this.notes = JSON.parse(storedNotes);
@@ -47,7 +48,6 @@ export class NoteService {
         this.notesSubject.next([...this.notes]);
         console.log('Loaded notes from storage:', this.notes.length, 'notes');
       } else {
-        // Load sample data if no stored notes
         this.loadSampleNotes();
       }
     } catch (error) {
@@ -57,7 +57,6 @@ export class NoteService {
   }
 
   private loadSampleNotes() {
-    // Load sample notes if HTTP service is available
     if (this.http) {
       this.http.get<Partial<Note>[]>(this.notesData).subscribe({
         next: (sampleNotes) => {
@@ -76,7 +75,6 @@ export class NoteService {
         },
         error: (error) => {
           console.error('Failed to load sample notes:', error);
-          // Create a default note if sample loading fails
           this.createDefaultNote();
         },
       });
@@ -98,7 +96,7 @@ This is your first note. You can:
 - Archive or delete notes using the action buttons
 
 Start organizing your thoughts and ideas!`,
-      tags: ['Welcome', 'Getting Started'],
+      tags: ['Welcome', 'Getting Started', 'Tips'],
       createdAt: new Date(),
       lastEdited: new Date(),
       isArchived: false,
@@ -117,7 +115,7 @@ Start organizing your thoughts and ideas!`,
       isArchived: note.isArchived || false,
     };
 
-    this.notes.unshift(newNote); // Add to beginning of array
+    this.notes.unshift(newNote);
     this.saveNotes();
     console.log('Created new note:', newNote.title);
     return newNote;
@@ -142,7 +140,6 @@ Start organizing your thoughts and ideas!`,
   updateNote(updatedNote: Note): void {
     const index = this.notes.findIndex((note) => note.id === updatedNote.id);
     if (index !== -1) {
-      // Update the last edited time
       updatedNote.lastEdited = new Date();
       this.notes[index] = { ...updatedNote };
       this.saveNotes();
@@ -239,13 +236,12 @@ Start organizing your thoughts and ideas!`,
     try {
       const importedNotes = JSON.parse(notesData) as Note[];
       if (Array.isArray(importedNotes)) {
-        // Validate and process imported notes
         const validNotes = importedNotes.filter(
           (note) => note.title !== undefined && note.content !== undefined
         );
 
         validNotes.forEach((note) => {
-          note.id = uuidv4(); // Generate new IDs to avoid conflicts
+          note.id = uuidv4();
           note.createdAt = new Date(note.createdAt);
           note.lastEdited = new Date(note.lastEdited);
         });
@@ -269,5 +265,18 @@ Start organizing your thoughts and ideas!`,
       active,
       archived,
     };
+  }
+
+  setFilteredNotes(notes: Note[]) {
+    this.filteredNotesSubject.next(notes);
+  }
+
+  setSelectedNoteId(noteId: string | null) {
+    this.selectedNoteIdSubject.next(noteId);
+  }
+
+  private updateFilteredNotes() {
+    const notes = this.getNotes();
+    this.filteredNotesSubject.next(notes);
   }
 }
