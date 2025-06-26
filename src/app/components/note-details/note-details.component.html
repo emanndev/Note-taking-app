@@ -1,85 +1,77 @@
 <div class="note-details-container">
-  <!-- Note Detail View -->
-  <div class="note-detail" *ngIf="selectedNote">
-    <div class="note-header">
-      <input
-        type="text"
-        [(ngModel)]="selectedNote.title"
-        class="note-title-input"
-        (blur)="updateNote()"
-        placeholder="Note title..."
-      />
-      <div class="note-actions">
-        <button
-          class="action-btn archive-btn"
-          (click)="archiveNote(selectedNote.id)"
-          [attr.aria-label]="'Archive ' + selectedNote.title"
-        >
-          <img src="./assets/images/icon-archive.svg" alt="archive-icon" />
-          Archive Note
-        </button>
-        <button
-          class="action-btn delete-btn"
-          (click)="deleteNote(selectedNote.id)"
-          [attr.aria-label]="'Delete ' + selectedNote.title"
-        >
-          <img src="./assets/images/icon-delete.svg" alt="" /> Delete Note
-        </button>
+  <div class="note-details-wrapper">
+    <!-- Note Detail View -->
+    <div class="note-detail" *ngIf="selectedNote">
+      <div class="note-header">
+        <input
+          type="text"
+          [(ngModel)]="selectedNote.title"
+          class="note-title-input"
+          (blur)="updateNote()"
+          placeholder="Note title..."
+        />
       </div>
-    </div>
 
-    <div class="note-meta">
-      <div class="meta-item">
-        <span class="meta-label">Tags</span>
-        <div class="tags-container">
-          <input
-            type="text"
-            [(ngModel)]="tagInput"
-            (keydown.enter)="addTag()"
-            (blur)="addTag()"
-            class="tag-input"
-            placeholder="Add tags..."
-          />
-          <span
-            *ngFor="let tag of selectedNote.tags; trackBy: trackByTag"
-            class="tag"
-          >
-            {{ tag }}
-            <button class="tag-remove" (click)="removeTag(tag)">×</button>
-          </span>
+      <div class="note-meta">
+        <div class="meta-item">
+          <span class="meta-label">Tags</span>
+          <div class="tags-container">
+            <input
+              type="text"
+              [(ngModel)]="tagInput"
+              (keydown.enter)="addTag()"
+              (blur)="addTag()"
+              class="tag-input"
+              placeholder="Add tags..."
+            />
+            <span
+              *ngFor="let tag of selectedNote.tags; trackBy: trackByTag"
+              class="tag"
+            >
+              {{ tag }}
+              <button class="tag-remove" (click)="removeTag(tag)">×</button>
+            </span>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Last edited</span>
+          <span class="meta-value">{{
+            formatDate(selectedNote.lastEdited)
+          }}</span>
         </div>
       </div>
-      <div class="meta-item">
-        <span class="meta-label">Last edited</span>
-        <span class="meta-value">{{
-          formatDate(selectedNote.lastEdited)
-        }}</span>
+
+      <div class="note-content">
+        <textarea
+          [(ngModel)]="selectedNote.content"
+          (blur)="updateNote()"
+          class="note-content-textarea"
+          placeholder="Start writing your note..."
+        ></textarea>
       </div>
-    </div>
 
-    <div class="note-content">
-      <textarea
-        [(ngModel)]="selectedNote.content"
-        (blur)="updateNote()"
-        class="note-content-textarea"
-        placeholder="Start writing your note..."
-      ></textarea>
-    </div>
-
-    <div class="note-footer">
-      <button class="save-btn" (click)="saveNote()">Save Note</button>
-      <button class="cancel-btn" (click)="cancelChanges()">Cancel</button>
+      <div class="note-footer">
+        <button class="save-btn" (click)="saveNote()">Save Note</button>
+        <button class="cancel-btn" (click)="cancelChanges()">Cancel</button>
+      </div>
     </div>
   </div>
 
-  <!-- Empty State when no note selected -->
-  <div class="empty-state" *ngIf="!selectedNote">
-    <div class="empty-state-content">
-      <h2>Select a note to view</h2>
-      <p>Choose a note from the sidebar to start reading or editing</p>
-      <button class="create-first-note-btn" (click)="createNewNote()">
-        Create Your First Note
-      </button>
-    </div>
+  <div class="note-actions" *ngIf="selectedNote">
+    <button
+      class="action-btn archive-btn"
+      (click)="archiveNote(selectedNote.id)"
+      [attr.aria-label]="'Archive ' + selectedNote.title"
+    >
+      <img src="./assets/images/icon-archive.svg" alt="archive-icon" />
+      Archive Note
+    </button>
+    <button
+      class="action-btn delete-btn"
+      (click)="deleteNote(selectedNote.id)"
+      [attr.aria-label]="'Delete ' + selectedNote.title"
+    >
+      <img src="./assets/images/icon-delete.svg" alt="" /> Delete Note
+    </button>
   </div>
 </div>

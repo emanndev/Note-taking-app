@@ -9,6 +9,7 @@ import { NoteCreateComponent } from './components/note-create/note-create.compon
 import { SettingsComponent } from './components/settings/settings.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   // Auth routes
@@ -21,16 +22,19 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'notes', pathMatch: 'full' },
-      { path: 'notes', component: NotesDashboardComponent },
+      {
+        path: 'notes',
+        component: NotesDashboardComponent,
+        canActivate: [authGuard],
+      },
       { path: 'notes/:id', component: NoteDetailsComponent },
       { path: 'create', component: NoteCreateComponent },
       { path: 'archived', component: ArchivedNotesComponent },
       { path: 'settings', component: SettingsComponent },
     ],
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
 
   //redirects routes
   { path: '', redirectTo: '/login', pathMatch: 'full' },

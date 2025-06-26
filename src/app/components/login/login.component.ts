@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,11 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -30,7 +35,8 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     if (email === savedUser.email && password === savedUser.password) {
-      this.router.navigate(['/notes']);
+      this.authService.login();
+      this.router.navigate(['/dashboard/notes']);
     } else {
       alert('Invalid credentials');
     }

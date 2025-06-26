@@ -70,7 +70,7 @@ export class NoteDetailsComponent implements OnInit {
     if (this.originalNote) {
       this.selectedNote = { ...this.originalNote };
     }
-    this.router.navigate(['/dashboard/notes']);
+    this.router.navigate(['/notes']);
   }
 
   addTag() {

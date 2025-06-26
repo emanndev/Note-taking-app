@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,17 +17,19 @@ export class SettingsComponent {
   font: string;
   activeSection: string | null = null;
 
-  // Password form fields
   oldPassword: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
 
-  // Password visibility toggles
   showOldPassword: boolean = false;
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  constructor(public themeService: ThemeService, private router: Router) {
+  constructor(
+    public themeService: ThemeService,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.theme = this.themeService.getTheme() || 'light';
     this.font = this.themeService.getFont() || 'Noto Sans';
   }
@@ -64,7 +67,6 @@ export class SettingsComponent {
       return;
     }
 
-    // Here you would typically make an API call to change the password
     console.log('Password change requested');
 
     // Reset form
@@ -82,6 +84,7 @@ export class SettingsComponent {
   logout() {
     if (confirm('Are you sure you want to logout?')) {
       console.log('User logged out');
+      this.authService.logout();
       this.router.navigate(['/login']);
     }
   }

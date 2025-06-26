@@ -2,11 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoteService } from '../../services/note.service';
 import { Note } from '../../models/note.interface';
+import { NoteDetailsComponent } from '../note-details/note-details.component';
 
 @Component({
   selector: 'app-notes-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NoteDetailsComponent],
   templateUrl: './notes-list.component.html',
   styleUrls: ['./notes-list.component.scss'],
 })

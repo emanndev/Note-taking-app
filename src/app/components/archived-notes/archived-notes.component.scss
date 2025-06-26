@@ -6,7 +6,7 @@
 }
 
 .archived-notes-panel {
-  width: 400px;
+  width: 300px;
   background-color: var(--bg-primary);
   border-right: 1px solid var(--border-color);
   display: flex;
@@ -14,8 +14,41 @@
   overflow: hidden;
 }
 
+.create-note-section {
+  padding: 16px;
+  border-bottom: 1px solid #f3f4f6;
+
+  .create-note-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+  }
+}
+
 .panel-header {
-  padding: 1.5rem;
+  padding: 1rem 2rem;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-secondary);
 }
@@ -91,28 +124,23 @@
 .empty-state {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 3rem 1rem;
+  margin: 0 auto;
+  padding: 1rem;
   color: var(--text-secondary);
-
-  .empty-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-  }
-
-  h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: var(--text-primary);
-  }
-
+  width: 100%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-muted);
   p {
-    margin: 0;
     font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+    padding: 0 0.9rem;
+  }
+
+  .create-link {
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
@@ -139,13 +167,6 @@
     font-size: 4rem;
     margin-bottom: 1rem;
     opacity: 0.3;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: var(--text-primary);
   }
 
   p {
@@ -368,40 +389,4 @@
   .note-footer {
     padding: 1rem;
   }
-}
-
-// CSS Variables (add these to your global styles if not already present)
-:root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
-  --border-color: #e5e7eb;
-  --border-hover: #d1d5db;
-  --accent-color: #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-light: #eff6ff;
-  --success-color: #10b981;
-  --success-light: #d1fae5;
-  --danger-color: #ef4444;
-  --danger-light: #fee2e2;
-  --warning-color: #f59e0b;
-  --warning-light: #fef3c7;
-  --tag-bg: #f3f4f6;
-  --tag-text: #4b5563;
-}
-
-[data-theme="dark"] {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #262626;
-  --text-primary: #ffffff;
-  --text-secondary: #a3a3a3;
-  --border-color: #404040;
-  --border-hover: #525252;
-  --accent-light: #1e40af;
-  --success-light: #064e3b;
-  --danger-light: #7f1d1d;
-  --warning-light: #78350f;
-  --tag-bg: #374151;
-  --tag-text: #d1d5db;
 }

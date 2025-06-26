@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NoteService } from '../../services/note.service';
 import { CommonModule } from '@angular/common';
 import { Note } from '../../models/note.interface';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-archived-notes',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './archived-notes.component.html',
   styleUrls: ['./archived-notes.component.scss'],
 })
@@ -14,7 +15,7 @@ export class ArchivedNotesComponent implements OnInit {
   archivedNotes: Note[] = [];
   selectedNote: Note | null = null;
 
-  constructor(public noteService: NoteService) {}
+  constructor(public noteService: NoteService, private router: Router) {}
 
   ngOnInit() {
     this.loadArchivedNotes();
@@ -22,7 +23,7 @@ export class ArchivedNotesComponent implements OnInit {
 
   loadArchivedNotes() {
     this.archivedNotes = this.noteService.getArchivedNotes();
-    // If we had a selected note and it's no longer archived, clear selection
+
     if (
       this.selectedNote &&
       !this.archivedNotes.find((note) => note.id === this.selectedNote!.id)
@@ -44,6 +45,10 @@ export class ArchivedNotesComponent implements OnInit {
         this.selectedNote = null;
       }
     }
+  }
+
+  createNewNote() {
+    this.router.navigate(['/dashboard/create']);
   }
 
   deleteNote(id: string) {

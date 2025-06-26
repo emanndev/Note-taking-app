@@ -1,6 +1,12 @@
 <div class="archived-notes-container">
   <!-- Left Panel - Archived Notes List -->
   <div class="archived-notes-panel">
+    <!-- Create New Note Button -->
+    <div class="create-note-section">
+      <button class="create-note-btn" (click)="createNewNote()">
+        + Create New Note
+      </button>
+    </div>
     <div class="panel-header">
       <div class="header-info">
         <p class="info-text">
@@ -35,9 +41,15 @@
         role="alert"
         aria-live="polite"
       >
-        <div class="empty-icon">📁</div>
-        <h3>No archived notes</h3>
-        <p>Your archived notes will appear here.</p>
+        <p>
+          No notes have been archived yet. Move notes here for safekeeping, or
+          <span
+            class="create-link"
+            [routerLink]="['/create']"
+            routerLinkActive="router-link-active"
+            >create a new note</span
+          >
+        </p>
       </div>
     </div>
   </div>
@@ -53,7 +65,9 @@
           (click)="restoreNote(selectedNote.id)"
           title="Restore Note"
         >
-          <span class="btn-icon">↶</span>
+          <span class="btn-icon"
+            ><img src="./assets/images/icon-restore.svg" alt="restore-icon"
+          /></span>
           Restore Note
         </button>
         <button
@@ -61,7 +75,9 @@
           (click)="deleteNote(selectedNote.id)"
           title="Delete Note"
         >
-          <span class="btn-icon">🗑</span>
+          <span class="btn-icon"
+            ><img src="./assets/images/icon-delete.svg" alt="delete-icon"
+          /></span>
           Delete Note
         </button>
       </div>
