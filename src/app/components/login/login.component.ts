@@ -31,14 +31,15 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
     const { email, password } = this.loginForm.value;
-
-    if (email === savedUser.email && password === savedUser.password) {
-      this.authService.login();
-      this.router.navigate(['/dashboard/notes']);
-    } else {
-      alert('Invalid credentials');
-    }
+    this.authService
+      .login(email, password)
+      .then(() => {
+        this.router.navigate(['/dashboard/notes']);
+      })
+      .catch((error) => {
+        console.error('Login failed', error);
+        alert('Invalid credentials or user does not exist.');
+      });
   }
 }

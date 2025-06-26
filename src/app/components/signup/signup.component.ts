@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +21,11 @@ export class SignupComponent {
   formPassword: string = '';
   showformPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -28,10 +33,15 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    if (this.signupForm.valid) {
-      // Save user to localStorage or call backend API
-      localStorage.setItem('user', JSON.stringify(this.signupForm.value));
-      this.router.navigate(['/notes']);
-    }
+    const { email, password } = this.signupForm.value;
+    this.authService
+      .signup(email, password)
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => {
+        console.error('Signup failed', error);
+        alert('Invalid credentials or user already exists.');
+      });
   }
 }
