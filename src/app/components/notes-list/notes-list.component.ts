@@ -7,7 +7,7 @@ import { NoteDetailsComponent } from '../note-details/note-details.component';
 @Component({
   selector: 'app-notes-list',
   standalone: true,
-  imports: [CommonModule, NoteDetailsComponent],
+  imports: [CommonModule],
   templateUrl: './notes-list.component.html',
   styleUrls: ['./notes-list.component.scss'],
 })

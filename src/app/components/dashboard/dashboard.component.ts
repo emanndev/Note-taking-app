@@ -15,13 +15,7 @@ import { Note } from '../../models/note.interface';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    FormsModule,
-    RouterOutlet,
-    RouterLink,
-    CommonModule,
-    SidebarComponent,
-  ],
+  imports: [FormsModule, RouterOutlet, CommonModule, SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
