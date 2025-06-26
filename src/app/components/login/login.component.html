@@ -4,6 +4,9 @@
     <h2>Welcome to Note</h2>
     <p>Please log in to continue</p>
 
+    <!-- toast message -->
+    <app-toast [message]="toastMessage" [show]="showToast" />
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <label>Email Address</label>
       <input
@@ -39,6 +42,8 @@
 
       <button type="submit">Login</button>
     </form>
+    <!-- loading spinner -->
+    <div class="spinner" *ngIf="isLoading"></div>
 
     <div class="divider">Or log in with:</div>
     <button class="google-btn">

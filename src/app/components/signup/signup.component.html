@@ -4,6 +4,9 @@
     <h2>Create Your Account</h2>
     <p>Sign up to start organizing your notes and boost your productivity.</p>
 
+    <!-- toaster message -->
+    <app-toast [message]="toastMessage" [show]="showToast" />
+
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <label>Email Address</label>
       <input
@@ -65,6 +68,8 @@
 
       <button type="submit" [disabled]="signupForm.invalid">Sign up</button>
     </form>
+    <!-- loading spinner -->
+    <div class="spinner" *ngIf="isLoading"></div>
 
     <div class="divider">Or log in with:</div>
     <button class="google-btn">
