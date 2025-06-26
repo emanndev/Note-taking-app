@@ -1,0 +1,86 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <img src="/assets/images/logo.svg" alt="Logo" class="logo" />
+    <h2>Create Your Account</h2>
+    <p>Sign up to start organizing your notes and boost your productivity.</p>
+
+    <!-- toaster message -->
+    <app-toast [message]="toastMessage" [show]="showToast" />
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <label>Email Address</label>
+      <input
+        type="email"
+        placeholder="email@example.com"
+        formControlName="email"
+      />
+      <div
+        class="error"
+        *ngIf="
+          signupForm.get('email')?.invalid && signupForm.get('email')?.touched
+        "
+      >
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon red-icon"
+        />
+        Please enter a valid email address.
+      </div>
+
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input
+          id="formPassword"
+          [type]="showformPassword ? 'text' : 'password'"
+          [(ngModel)]="formPassword"
+          name="formPassword"
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          class="toggle-password"
+          (click)="showformPassword = !showformPassword"
+          aria-label="Toggle password visibility"
+        >
+          <img
+            [src]="
+              showformPassword
+                ? '/assets/images/icon-hide-password.svg'
+                : '/assets/images/icon-show-password.svg'
+            "
+            alt="Toggle password visibility"
+            class="toggle-password-icon"
+          />
+        </button>
+      </div>
+
+      <p class="hint">
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon"
+        />
+        At least 8 characters
+      </p>
+
+      <button type="submit" [disabled]="signupForm.invalid">Sign up</button>
+    </form>
+    <!-- loading spinner -->
+    <div class="spinner" *ngIf="isLoading"></div>
+
+    <div class="divider">Or log in with:</div>
+    <button class="google-btn">
+      <span class="g-icon"
+        ><img src="/assets/images/icon-google.svg" alt="google-icon"
+      /></span>
+      Google
+    </button>
+
+    <p class="auth-footer">
+      Already have an account? <a routerLink="/login">Login</a>
+    </p>
+  </div>
+</div>

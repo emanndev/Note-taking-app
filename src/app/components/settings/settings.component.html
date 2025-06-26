@@ -1,0 +1,340 @@
+<div class="settings-container">
+  <div class="settings-content">
+    <!-- Color Theme Section -->
+    <div class="settings-section">
+      <button
+        class="settings-option"
+        [class.active]="activeSection === 'color'"
+        (click)="toggleSection('color')"
+      >
+        <div class="option-content">
+          <span class="option-icon"
+            ><img src="./assets/images/icon-sun.svg" alt="sun-icon"
+          /></span>
+          <span class="option-text">Color Theme</span>
+        </div>
+        <span class="expand-arrow" [class.expanded]="activeSection === 'color'"
+          >›</span
+        >
+      </button>
+
+      <div class="settings-panel" *ngIf="activeSection === 'color'">
+        <h3>Color Theme</h3>
+        <p class="panel-description">Choose your color theme:</p>
+
+        <div class="theme-options">
+          <label class="theme-option" [class.selected]="theme === 'light'">
+            <input
+              type="radio"
+              name="theme"
+              value="light"
+              [(ngModel)]="theme"
+              (change)="setTheme('light')"
+            />
+            <div class="theme-preview">
+              <span class="theme-icon"
+                ><img src="./assets/images/icon-sun.svg" alt="sun-icon"
+              /></span>
+              <div class="theme-info">
+                <span class="theme-name">Light Mode</span>
+                <span class="theme-description"
+                  >Pick a clean and classic light theme</span
+                >
+              </div>
+            </div>
+          </label>
+
+          <label class="theme-option" [class.selected]="theme === 'dark'">
+            <input
+              type="radio"
+              name="theme"
+              value="dark"
+              [(ngModel)]="theme"
+              (change)="setTheme('dark')"
+            />
+            <div class="theme-preview">
+              <span class="theme-icon"
+                ><img src="./assets/images/icon-moon.svg" alt="moon-icon"
+              /></span>
+              <div class="theme-info">
+                <span class="theme-name">Dark Mode</span>
+                <span class="theme-description"
+                  >Select a sleek and modern dark theme</span
+                >
+              </div>
+            </div>
+          </label>
+
+          <label class="theme-option" [class.selected]="theme === 'system'">
+            <input
+              type="radio"
+              name="theme"
+              value="system"
+              [(ngModel)]="theme"
+              (change)="setTheme('system')"
+            />
+            <div class="theme-preview">
+              <span class="theme-icon"
+                ><img src="./assets/images/icon-system-theme.svg" alt="" />
+              </span>
+              <div class="theme-info">
+                <span class="theme-name">System</span>
+                <span class="theme-description"
+                  >Adapts to your device's theme</span
+                >
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <button class="apply-btn" (click)="activeSection = null">
+          Apply Changes
+        </button>
+      </div>
+    </div>
+
+    <!-- Font Theme Section -->
+    <div class="settings-section">
+      <button
+        class="settings-option"
+        [class.active]="activeSection === 'font'"
+        (click)="toggleSection('font')"
+      >
+        <div class="option-content">
+          <span class="option-icon">
+            <img src="./assets/images/icon-font.svg" alt=""
+          /></span>
+          <span class="option-text">Font Theme</span>
+        </div>
+        <span class="expand-arrow" [class.expanded]="activeSection === 'font'"
+          >›</span
+        >
+      </button>
+
+      <div class="settings-panel" *ngIf="activeSection === 'font'">
+        <h3>Font Theme</h3>
+        <p class="panel-description">Choose your font theme:</p>
+
+        <div class="font-options">
+          <label class="font-option" [class.selected]="font === 'Noto Sans'">
+            <input
+              type="radio"
+              name="font"
+              value="Noto Sans"
+              [(ngModel)]="font"
+              (change)="setFont('Noto Sans')"
+            />
+            <div class="font-preview">
+              <span class="font-sample"
+                ><img
+                  src="./assets/images/icon-font-sans-serif.svg"
+                  alt="sans-serif-icon"
+                />
+              </span>
+              <div class="font-info">
+                <span class="font-name">Sans-serif</span>
+                <span class="font-description"
+                  >Clean and modern, easy to read.</span
+                >
+              </div>
+            </div>
+          </label>
+
+          <label class="font-option" [class.selected]="font === 'Noto Serif'">
+            <input
+              type="radio"
+              name="font"
+              value="Noto Serif"
+              [(ngModel)]="font"
+              (change)="setFont('Noto Serif')"
+            />
+            <div class="font-preview">
+              <span class="font-sample serif"
+                ><img
+                  src="./assets/images/icon-font-serif.svg"
+                  alt="serif-icon"
+              /></span>
+              <div class="font-info">
+                <span class="font-name">Serif</span>
+                <span class="font-description"
+                  >Classic and elegant for a timeless feel.</span
+                >
+              </div>
+            </div>
+          </label>
+
+          <label class="font-option" [class.selected]="font === 'Monaco'">
+            <input
+              type="radio"
+              name="font"
+              value="Monaco"
+              [(ngModel)]="font"
+              (change)="setFont('Monaco')"
+            />
+            <div class="font-preview">
+              <span class="font-sample mono"
+                ><img
+                  src="./assets/images/icon-font-monospace.svg"
+                  alt="monospace-icon"
+              /></span>
+              <div class="font-info">
+                <span class="font-name">Monospace</span>
+                <span class="font-description"
+                  >Code-like, great for a technical vibe.</span
+                >
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <button class="apply-btn" (click)="activeSection = null">
+          Apply Changes
+        </button>
+      </div>
+    </div>
+
+    <!-- Change Password Section -->
+    <div class="settings-section">
+      <button
+        class="settings-option"
+        [class.active]="activeSection === 'password'"
+        (click)="toggleSection('password')"
+      >
+        <div class="option-content">
+          <span class="option-icon"
+            ><img src="./assets/images/icon-lock.svg" alt=""
+          /></span>
+          <span class="option-text">Change Password</span>
+        </div>
+        <span
+          class="expand-arrow"
+          [class.expanded]="activeSection === 'password'"
+          >›</span
+        >
+      </button>
+
+      <div class="settings-panel" *ngIf="activeSection === 'password'">
+        <h3>Change Password</h3>
+
+        <form class="password-form" (ngSubmit)="changePassword()">
+          <div class="form-group">
+            <label for="oldPassword">Old Password</label>
+            <div class="password-input-container">
+              <input
+                id="oldPassword"
+                [type]="showOldPassword ? 'text' : 'password'"
+                [(ngModel)]="oldPassword"
+                name="oldPassword"
+                class="password-input"
+                placeholder="Enter current password"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="showOldPassword = !showOldPassword"
+              >
+                <img
+                  [src]="
+                    showOldPassword
+                      ? 'assets/images/icon-hide-password.svg'
+                      : 'assets/images/icon-show-password.svg'
+                  "
+                  alt=" Toggle password visibility"
+                />
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <div class="password-input-container">
+              <input
+                id="newPassword"
+                [type]="showNewPassword ? 'text' : 'password'"
+                [(ngModel)]="newPassword"
+                name="newPassword"
+                class="password-input"
+                placeholder="Enter new password"
+                required
+                minlength="8"
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="showNewPassword = !showNewPassword"
+              >
+                <img
+                  [src]="
+                    showOldPassword
+                      ? 'assets/images/icon-hide-password.svg'
+                      : 'assets/images/icon-show-password.svg'
+                  "
+                  alt=" Toggle password visibility"
+                />
+              </button>
+            </div>
+            <small class="password-hint">
+              <span class="hint-icon"
+                ><img
+                  src="./assets/images/icon-info.svg"
+                  alt="info-icon"
+                  class="info-icon"
+              /></span>
+              At least 8 characters
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm New Password</label>
+            <div class="password-input-container">
+              <input
+                id="confirmPassword"
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                class="password-input"
+                placeholder="Confirm new password"
+                required
+              />
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="showConfirmPassword = !showConfirmPassword"
+              >
+                <img
+                  [src]="
+                    showOldPassword
+                      ? 'assets/images/icon-hide-password.svg'
+                      : 'assets/images/icon-show-password.svg'
+                  "
+                  alt=" Toggle password visibility"
+                />
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="save-password-btn"
+            [disabled]="!isPasswordFormValid()"
+          >
+            Save Password
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Logout Section -->
+    <div class="settings-section">
+      <button class="settings-option logout-option" (click)="logout()">
+        <div class="option-content">
+          <span class="option-icon"
+            ><img src="./assets/images/icon-logout.svg" alt=""
+          /></span>
+          <span class="option-text">Logout</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

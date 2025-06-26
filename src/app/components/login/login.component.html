@@ -1,0 +1,60 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <img src="/assets/images/logo.svg" alt="Logo" class="logo" />
+    <h2>Welcome to Note</h2>
+    <p>Please log in to continue</p>
+
+    <!-- toast message -->
+    <app-toast [message]="toastMessage" [show]="showToast" />
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label>Email Address</label>
+      <input
+        type="email"
+        placeholder="email@example.com"
+        formControlName="email"
+      />
+      <div
+        class="error"
+        *ngIf="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+      >
+        <img
+          src="/assets/images/icon-info.svg"
+          alt="info-icon"
+          class="info-icon red-icon"
+        />
+        Please enter a valid email address.
+      </div>
+
+      <label
+        >Password
+        <a class="forgot-link" routerLink="/forgot-password">Forgot</a></label
+      >
+      <div class="password-wrapper">
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+    <!-- loading spinner -->
+    <div class="spinner" *ngIf="isLoading"></div>
+
+    <div class="divider">Or log in with:</div>
+    <button class="google-btn">
+      <span class="g-icon"
+        ><img src="/assets/images/icon-google.svg" alt="google-icon"
+      /></span>
+      Google
+    </button>
+
+    <p class="auth-footer">
+      No account yet? <a routerLink="/signup">Sign Up</a>
+    </p>
+  </div>
+</div>

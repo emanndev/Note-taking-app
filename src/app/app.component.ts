@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'angular-note-taking-app-v2';
+export class AppComponent implements OnInit {
+  constructor(public themeService: ThemeService) {}
+
+  ngOnInit() {
+    this.initializeTheme();
+  }
+
+  private initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedFont = localStorage.getItem('font') || 'Noto Sans';
+    this.themeService.setTheme(savedTheme);
+    this.themeService.setFont(savedFont);
+  }
 }

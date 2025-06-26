@@ -1,0 +1,66 @@
+<nav
+  class="sidebar"
+  [class.collapsed]="isCollapsed"
+  [class.mobile-hidden]="isMobileHidden"
+>
+  <!-- Header -->
+  <div class="sidebar-header">
+    <div class="logo" *ngIf="!isCollapsed">
+      <span class="logo-icon"
+        ><img src="./assets/images/logo.svg" alt="logo-icon" class="home-icon"
+      /></span>
+    </div>
+    <button class="close-btn" *ngIf="showMobileClose" (click)="closeSidebar()">
+      ×
+    </button>
+  </div>
+
+  <!-- All Notes Section -->
+  <div class="sidebar-section">
+    <button
+      class="section-button"
+      [class.active]="currentSection === 'all'"
+      (click)="setCurrentSection('all')"
+    >
+      <span class="section-icon"
+        ><img src="./assets/images/icon-home.svg" alt=""
+      /></span>
+      <span class="section-text" *ngIf="!isCollapsed">All Notes</span>
+      <span class="expand-icon" *ngIf="!isCollapsed">›</span>
+    </button>
+  </div>
+
+  <!-- Archived Notes -->
+  <div class="sidebar-section" *ngIf="!isCollapsed">
+    <button
+      class="section-button archived-section"
+      [class.active]="currentSection === 'archived'"
+      (click)="setCurrentSection('archived')"
+    >
+      <span class="section-icon"
+        ><img src="./assets/images/icon-archive.svg" alt=""
+      /></span>
+      <span class="section-text">Archived Notes</span>
+    </button>
+  </div>
+
+  <!-- Tags Section -->
+  @if(!isCollapsed){
+  <div class="tags-section">
+    <h3 class="tags-title">Tags</h3>
+
+    @for( tag of getAllTags(); track $index){
+    <div class="tag-list">
+      <img src="./assets/images/icon-tag.svg" class="tag-icon" alt="tag-icon" />
+      <a
+        class="tag-filter"
+        [class.active]="selectedTag === tag"
+        (click)="filterByTag(tag)"
+      >
+        {{ tag }}
+      </a>
+    </div>
+    }
+  </div>
+  }
+</nav>

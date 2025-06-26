@@ -1,0 +1,48 @@
+<div class="app-container">
+  <!-- Sidebar -->
+  <app-sidebar
+    [isCollapsed]="sidebarCollapsed"
+    [selectedNoteId]="selectedNoteId"
+    [currentSection]="currentSection"
+    [selectedTag]="selectedTag"
+    [isMobileHidden]="isMobile && !showMobileSidebar"
+    [showMobileClose]="isMobile"
+    (sectionChange)="setCurrentSection($event)"
+    (tagFilter)="filterByTag($event)"
+    (closeMobileSidebar)="closeMobileSidebar()"
+  ></app-sidebar>
+
+  <!-- Main Content -->
+  <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
+    <header class="main-header">
+      <div class="header-left">
+        <h1 class="page-title">{{ getPageTitle() }}</h1>
+      </div>
+
+      <div class="header-right">
+        <div class="search-container">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="onSearch()"
+            placeholder="Search by title, content, or tags..."
+            class="search-input"
+          />
+        </div>
+        <button class="settings-btn" (click)="openSettings()">
+          <img src="./assets/images/icon-settings.svg" alt="settings-icon" />
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <div
+    class="mobile-overlay"
+    *ngIf="isMobile && showMobileSidebar"
+    (click)="closeMobileSidebar()"
+  ></div>
+</div>
