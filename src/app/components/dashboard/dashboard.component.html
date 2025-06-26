@@ -1,111 +1,31 @@
 <div class="app-container">
   <!-- Sidebar -->
-  <nav class="sidebar" [class.collapsed]="sidebarCollapsed">
-    <!-- Header -->
-    <div class="sidebar-header">
-      <div class="logo">
-        <span class="logo-icon" *ngIf="!sidebarCollapsed"
-          ><img src="/assets/images/logo.svg" alt="logo"
-        /></span>
-      </div>
-    </div>
-
-    <!-- All Notes Section -->
-    <div class="sidebar-section">
-      <button
-        class="section-button"
-        [class.active]="currentSection === 'all'"
-        (click)="setCurrentSection('all')"
-        routerLink="/dashboard/notes"
-      >
-        <span class="section-icon">📄</span>
-        <span class="section-text" *ngIf="!sidebarCollapsed">All Notes</span>
-        <span class="expand-icon" *ngIf="!sidebarCollapsed">›</span>
-      </button>
-    </div>
-
-    <!-- Create New Note Button -->
-    <button
-      class="create-note-btn"
-      routerLink="/dashboard/create"
-      *ngIf="!sidebarCollapsed"
-    >
-      + Create New Note
-    </button>
-
-    <!-- Notes List -->
-    <div class="notes-list" *ngIf="!sidebarCollapsed">
-      <!-- Show notes if there are results or no search query -->
-      <div
-        *ngFor="let note of getVisibleNotes()"
-        class="note-item"
-        [class.active]="selectedNoteId === note.id"
-        (click)="selectNote(note.id)"
-      >
-        <h4 class="note-title">{{ note.title }}</h4>
-        <div class="note-meta">
-          <span class="note-tags">
-            <span *ngFor="let tag of note.tags; let last = last" class="tag">
-              {{ tag }}<span *ngIf="!last">, </span>
-            </span>
-          </span>
-          <span class="note-date">{{ formatDate(note.lastEdited) }}</span>
-        </div>
-      </div>
-
-      <!-- No Results Message -->
-      <div class="no-results" *ngIf="shouldShowNoResults()">
-        <div class="no-results-icon">🔍</div>
-        <h4 class="no-results-title">No notes match your search</h4>
-        <p class="no-results-text">
-          Try a different keyword or
-          <button class="link-button" routerLink="/dashboard/create">
-            create a new note
-          </button>
-        </p>
-        <button class="clear-search-btn" (click)="clearSearch()">
-          Clear search
-        </button>
-      </div>
-    </div>
-
-    <!-- Archived Notes -->
-    <div class="sidebar-section" *ngIf="!sidebarCollapsed">
-      <button
-        class="section-button archived-section"
-        [class.active]="currentSection === 'archived'"
-        (click)="setCurrentSection('archived')"
-        routerLink="/dashboard/archived"
-      >
-        <span class="section-icon">📁</span>
-        <span class="section-text">Archived Notes</span>
-      </button>
-    </div>
-
-    <!-- Tags Section -->
-    <div class="tags-section" *ngIf="!sidebarCollapsed">
-      <h3 class="tags-title">Tags</h3>
-      <div class="tag-list">
-        <button
-          *ngFor="let tag of getAllTags()"
-          class="tag-filter"
-          [class.active]="selectedTag === tag"
-          (click)="filterByTag(tag)"
-        >
-          {{ tag }}
-        </button>
-      </div>
-    </div>
-  </nav>
+  <app-sidebar
+    [isCollapsed]="sidebarCollapsed"
+    [selectedNoteId]="selectedNoteId"
+    [currentSection]="currentSection"
+    [selectedTag]="selectedTag"
+    [isMobileHidden]="isMobile && !showMobileSidebar"
+    [showMobileClose]="isMobile"
+    (sectionChange)="setCurrentSection($event)"
+    (noteSelect)="selectNote($event)"
+    (tagFilter)="filterByTag($event)"
+    (createNote)="createNewNote()"
+    (closeMobileSidebar)="closeMobileSidebar()"
+  ></app-sidebar>
 
   <!-- Main Content -->
-  <main class="main-content">
+  <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
     <!-- Header -->
     <header class="main-header">
-      <button class="sidebar-toggle" (click)="toggleSidebar()">☰</button>
-
-      <div class="header-content">
+      <div class="header-left">
+        <button class="sidebar-toggle" (click)="toggleSidebar()">
+          <span class="hamburger-icon">☰</span>
+        </button>
         <h1 class="page-title">{{ getPageTitle() }}</h1>
+      </div>
+
+      <div class="header-right">
         <div class="search-container">
           <input
             type="text"
@@ -115,44 +35,21 @@
             class="search-input"
           />
           <span class="search-icon">🔍</span>
-          <!-- Clear search button when searching -->
-          <button
-            *ngIf="searchQuery.trim()"
-            class="clear-search-icon"
-            (click)="clearSearch()"
-            title="Clear search"
-          >
-            ×
-          </button>
         </div>
-        <button class="settings-btn" routerLink="/dashboard/settings">
-          ⚙️
-        </button>
+        <button class="settings-btn" (click)="openSettings()">⚙️</button>
       </div>
     </header>
 
     <!-- Content Area -->
     <div class="content-area">
-      <div
-        class="main-no-results"
-        *ngIf="shouldShowNoResults() && sidebarCollapsed"
-      >
-        <div class="no-results-content">
-          <div class="no-results-icon">🔍</div>
-          <h2 class="no-results-title">No notes match your search</h2>
-          <p class="no-results-text">
-            Try a different keyword or
-            <button class="link-button" routerLink="/dashboard/create">
-              create a new note
-            </button>
-          </p>
-          <button class="clear-search-btn" (click)="clearSearch()">
-            Clear search
-          </button>
-        </div>
-      </div>
-
       <router-outlet></router-outlet>
     </div>
   </main>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div
+    class="mobile-overlay"
+    *ngIf="isMobile && showMobileSidebar"
+    (click)="closeMobileSidebar()"
+  ></div>
 </div>

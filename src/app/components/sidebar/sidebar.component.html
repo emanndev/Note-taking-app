@@ -1,0 +1,85 @@
+<nav
+  class="sidebar"
+  [class.collapsed]="isCollapsed"
+  [class.mobile-hidden]="isMobileHidden"
+>
+  <!-- Header -->
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon">📝</span>
+      <span class="logo-text" *ngIf="!isCollapsed">Notes</span>
+    </div>
+    <button class="close-btn" *ngIf="showMobileClose" (click)="closeSidebar()">
+      ×
+    </button>
+  </div>
+
+  <!-- All Notes Section -->
+  <div class="sidebar-section">
+    <button
+      class="section-button"
+      [class.active]="currentSection === 'all'"
+      (click)="setCurrentSection('all')"
+    >
+      <span class="section-icon">📄</span>
+      <span class="section-text" *ngIf="!isCollapsed">All Notes</span>
+      <span class="expand-icon" *ngIf="!isCollapsed">›</span>
+    </button>
+  </div>
+
+  <!-- Create New Note Button -->
+  <button
+    class="create-note-btn"
+    (click)="createNewNote()"
+    *ngIf="!isCollapsed"
+  >
+    + Create New Note
+  </button>
+
+  <!-- Notes List -->
+  <div class="notes-list" *ngIf="!isCollapsed">
+    <div
+      *ngFor="let note of getVisibleNotes()"
+      class="note-item"
+      [class.active]="selectedNoteId === note.id"
+      (click)="selectNote(note.id)"
+    >
+      <h4 class="note-title">{{ note.title }}</h4>
+      <div class="note-meta">
+        <span class="note-tags">
+          <span *ngFor="let tag of note.tags; let last = last" class="tag">
+            {{ tag }}<span *ngIf="!last">, </span>
+          </span>
+        </span>
+        <span class="note-date">{{ formatDate(note.lastEdited) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Archived Notes -->
+  <div class="sidebar-section" *ngIf="!isCollapsed">
+    <button
+      class="section-button archived-section"
+      [class.active]="currentSection === 'archived'"
+      (click)="setCurrentSection('archived')"
+    >
+      <span class="section-icon">📁</span>
+      <span class="section-text">Archived Notes</span>
+    </button>
+  </div>
+
+  <!-- Tags Section -->
+  <div class="tags-section" *ngIf="!isCollapsed">
+    <h3 class="tags-title">Tags</h3>
+    <div class="tag-list">
+      <button
+        *ngFor="let tag of getAllTags()"
+        class="tag-filter"
+        [class.active]="selectedTag === tag"
+        (click)="filterByTag(tag)"
+      >
+        {{ tag }}
+      </button>
+    </div>
+  </div>
+</nav>

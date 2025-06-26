@@ -7,37 +7,37 @@
   },
   {
     "title": "Japan Travel Planning",
-    "content": "Tokyo itinerary and travel tips for upcoming trip",
+    "content": "Tokyo itinerary and travel tips for upcoming trip:\n\nDay 1: Arrival\n- Check into hotel in Shibuya\n- Visit Meiji Shrine\n- Explore Harajuku\n\nDay 2: Traditional Tokyo\n- Sensoji Temple in Asakusa\n- Tokyo National Museum\n- Walk through Imperial Palace Gardens\n\nDay 3: Modern Tokyo\n- Tokyo Skytree\n- Akihabara electronics district\n- TeamLab Borderless\n\nFood to try:\n- Ramen at Ichiran\n- Sushi at Tsukiji Outer Market\n- Tempura at Daikokuya",
     "tags": ["Travel", "Personal"],
     "isArchived": false
   },
   {
     "title": "Favorite Pasta Recipes",
-    "content": "Collection of my favorite pasta recipes",
+    "content": "Collection of my favorite pasta recipes:\n\n1. Carbonara\n- Eggs, pecorino cheese, pancetta, black pepper\n- No cream needed!\n\n2. Aglio e Olio\n- Garlic, olive oil, red pepper flakes, parsley\n- Simple but delicious\n\n3. Puttanesca\n- Tomatoes, olives, capers, anchovies\n- Bold and flavorful",
     "tags": ["Cooking", "Recipes"],
     "isArchived": false
   },
   {
     "title": "Weekly Workout Plan",
-    "content": "Monday: Upper body\nTuesday: Cardio\nWednesday: Lower body",
-    "tags": ["Dev", "React"],
+    "content": "Monday: Upper body\n- Push-ups: 3 sets of 15\n- Pull-ups: 3 sets of 8\n- Dumbbell rows: 3 sets of 12\n\nTuesday: Cardio\n- 30 minutes running\n- 15 minutes cycling\n\nWednesday: Lower body\n- Squats: 3 sets of 20\n- Lunges: 3 sets of 12 each leg\n- Calf raises: 3 sets of 15\n\nThursday: Rest day\nFriday: Full body\nSaturday: Cardio\nSunday: Rest day",
+    "tags": ["Fitness", "Health"],
     "isArchived": false
   },
   {
     "title": "Meal Prep Ideas",
-    "content": "Healthy meal prep recipes for the week",
+    "content": "Healthy meal prep recipes for the week:\n\nBreakfast:\n- Overnight oats with berries\n- Greek yogurt parfait\n\nLunch:\n- Quinoa bowl with roasted vegetables\n- Chicken and sweet potato\n\nDinner:\n- Salmon with asparagus\n- Turkey meatballs with zucchini noodles\n\nSnacks:\n- Apple slices with almond butter\n- Hummus with carrots",
     "tags": ["Cooking", "Health", "Recipes"],
     "isArchived": false
   },
   {
     "title": "Reading List",
-    "content": "Books to read this year",
+    "content": "Books to read this year:\n\nTechnical:\n- Clean Code by Robert Martin\n- System Design Interview by Alex Xu\n- Designing Data-Intensive Applications\n\nFiction:\n- The Seven Husbands of Evelyn Hugo\n- Project Hail Mary\n- Klara and the Sun\n\nNon-fiction:\n- Atomic Habits by James Clear\n- The Psychology of Money",
     "tags": ["Personal", "Dev"],
     "isArchived": false
   },
   {
     "title": "Fitness Goals 2025",
-    "content": "My fitness objectives for this year",
+    "content": "My fitness objectives for this year:\n\nStrength Goals:\n- Bench press: 1.5x body weight\n- Squat: 2x body weight\n- Deadlift: 2.5x body weight\n\nCardio Goals:\n- Run a half marathon\n- Complete a triathlon\n- Bike 100 miles in a day\n\nFlexibility:\n- Touch my toes consistently\n- Hold a plank for 5 minutes\n- Improve yoga practice",
     "tags": ["Fitness", "Health", "Personal"],
     "isArchived": false
   }

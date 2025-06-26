@@ -1,59 +1,16 @@
 <div class="notes-dashboard">
-  <!-- Note Detail View -->
-  <div class="note-detail" *ngIf="selectedNote">
-    <div class="note-header">
-      <h1 class="note-title">{{ selectedNote.title }}</h1>
-      <div class="note-actions">
-        <button
-          class="action-btn archive-btn"
-          (click)="archiveNote(selectedNote.id)"
-          [attr.aria-label]="'Archive ' + selectedNote.title"
-        >
-          📁 Archive Note
-        </button>
-        <button
-          class="action-btn delete-btn"
-          (click)="deleteNote(selectedNote.id)"
-          [attr.aria-label]="'Delete ' + selectedNote.title"
-        >
-          🗑️ Delete Note
-        </button>
-      </div>
-    </div>
+  <!-- This will display the note details component based on routing -->
+  <router-outlet></router-outlet>
 
-    <div class="note-meta">
-      <div class="meta-item">
-        <span class="meta-label">Tags</span>
-        <div class="tags-container">
-          <span *ngFor="let tag of selectedNote.tags" class="tag">{{
-            tag
-          }}</span>
-        </div>
-      </div>
-      <div class="meta-item">
-        <span class="meta-label">Last edited</span>
-        <span class="meta-value">{{
-          formatDate(selectedNote.lastEdited)
-        }}</span>
-      </div>
-    </div>
-
-    <div class="note-content">
-      <pre>{{ selectedNote.content }}</pre>
-    </div>
-
-    <div class="note-footer">
-      <button class="save-btn">Save Note</button>
-      <button class="cancel-btn">Cancel</button>
-    </div>
-  </div>
-
-  <!-- Empty State when no note selected -->
-  <div class="empty-state" *ngIf="!selectedNote">
+  <!-- Empty State when no notes exist -->
+  <div class="empty-state" *ngIf="noteService.getNotes().length === 0">
     <div class="empty-state-content">
       <div class="empty-icon">📝</div>
-      <h2>Select a note to view</h2>
-      <p>Choose a note from the sidebar to start reading or editing</p>
+      <h2>No notes yet</h2>
+      <p>Create your first note to get started</p>
+      <button class="create-first-note-btn" (click)="createNewNote()">
+        Create Your First Note
+      </button>
     </div>
   </div>
 </div>
