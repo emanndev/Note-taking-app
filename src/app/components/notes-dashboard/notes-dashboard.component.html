@@ -1,26 +1,179 @@
-<div class="notes-dashboard">
-  <div class="notes-panel" [class.mobile-hidden]="isMobile && selectedNoteId">
-    <app-notes-list
-      [selectedNoteId]="selectedNoteId"
-      [currentSection]="currentSection"
-      [selectedTag]="selectedTag"
-      [filteredNotes]="filteredNotes"
-      (noteSelect)="selectNote($event)"
-      (createNote)="createNewNote()"
-    ></app-notes-list>
-  </div>
-
-  <div class="content-panel" [class.mobile-full]="isMobile && selectedNoteId">
-    <!-- Mobile Back Button -->
-    <div class="mobile-header" *ngIf="isMobile && selectedNoteId">
-      <button class="back-btn" (click)="goBack()">
-        <span class="back-icon">‹</span>
-        Back to Notes
+<!-- notes-dashboard.component.html -->
+<div class="notes-dashboard-container">
+  <!-- Left Panel - Notes List -->
+  <div class="notes-panel">
+    <!-- Create New Note Button -->
+    <div class="create-note-section">
+      <button class="create-note-btn" (click)="createNewNote()">
+        + Create New Note
       </button>
     </div>
 
+    <div class="panel-header">
+      <div class="header-info">
+        <p class="info-text">
+          All your notes are organized here. Select a note to view and edit its
+          content.
+        </p>
+      </div>
+    </div>
+
+    <div class="notes-list">
+      <div
+        *ngFor="let note of getVisibleNotes()"
+        class="note-card"
+        [class.selected]="selectedNoteId === note.id"
+        (click)="selectNote(note.id)"
+        tabindex="0"
+        role="article"
+        [attr.aria-labelledby]="'note-' + note.id"
+      >
+        <h3 id="note-{{ note.id }}" class="note-title">
+          {{ note.title }}
+        </h3>
+        <div class="note-tags">
+          <span *ngFor="let tag of note.tags" class="tag">{{ tag }}</span>
+        </div>
+        <div class="note-date">{{ formatDate(note.lastEdited) }}</div>
+      </div>
+
+      <div
+        *ngIf="getVisibleNotes().length === 0"
+        class="empty-state"
+        role="alert"
+        aria-live="polite"
+      >
+        <p>
+          No notes available.
+          <span
+            class="create-link"
+            (click)="createNewNote()"
+            role="button"
+            tabindex="0"
+            >Create your first note</span
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel - Note Details -->
+  <div class="note-details-panel" *ngIf="selectedNote">
+    <div class="note-header">
+      <input
+        type="text"
+        [(ngModel)]="selectedNote.title"
+        class="note-title-input"
+        (blur)="updateNote()"
+        placeholder="Note title..."
+      />
+
+      <div class="note-actions">
+        <button
+          class="action-btn archive-btn"
+          (click)="archiveNote(selectedNote.id)"
+          title="Archive Note"
+        >
+          <span class="btn-icon">📁</span>
+          Archive Note
+        </button>
+        <button
+          class="action-btn delete-btn"
+          (click)="deleteNote(selectedNote.id)"
+          title="Delete Note"
+        >
+          <span class="btn-icon">🗑️</span>
+          Delete Note
+        </button>
+      </div>
+    </div>
+
+    <div class="note-metadata">
+      <div class="metadata-item">
+        <span class="metadata-icon">🏷️</span>
+        <span class="metadata-label">Tags</span>
+        <div class="metadata-value">
+          <input
+            type="text"
+            [(ngModel)]="tagInput"
+            (keydown.enter)="addTag()"
+            (blur)="addTag()"
+            class="tag-input"
+            placeholder="Add tags..."
+          />
+          <span
+            *ngFor="let tag of selectedNote.tags; trackBy: trackByTag"
+            class="tag"
+          >
+            {{ tag }}
+            <button class="tag-remove" (click)="removeTag(tag)">×</button>
+          </span>
+          <span *ngIf="selectedNote.tags.length === 0" class="no-tags"
+            >No tags</span
+          >
+        </div>
+      </div>
+
+      <div class="metadata-item">
+        <span class="metadata-icon">📝</span>
+        <span class="metadata-label">Status</span>
+        <div class="metadata-value">
+          <span class="status active">Active</span>
+        </div>
+      </div>
+
+      <div class="metadata-item">
+        <span class="metadata-icon">🕐</span>
+        <span class="metadata-label">Last edited</span>
+        <div class="metadata-value">
+          {{ formatDate(selectedNote.lastEdited) }}
+        </div>
+      </div>
+    </div>
+
     <div class="note-content">
-      <router-outlet></router-outlet>
+      <textarea
+        [(ngModel)]="selectedNote.content"
+        (blur)="updateNote()"
+        class="note-content-textarea"
+        placeholder="Start writing your note..."
+      ></textarea>
+    </div>
+
+    <div class="note-footer">
+      <button class="btn btn-primary" (click)="saveNote()">Save Note</button>
+      <button class="btn btn-secondary" (click)="cancelChanges()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <!-- Placeholder when no note is selected -->
+  <div
+    class="note-details-panel placeholder"
+    *ngIf="!selectedNote && getVisibleNotes().length > 0"
+  >
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📝</div>
+      <h3>Select a note to view details</h3>
+      <p>Choose a note from the list to view and edit its content.</p>
+    </div>
+  </div>
+
+  <!-- Empty state when no notes exist -->
+  <div
+    class="note-details-panel placeholder"
+    *ngIf="getVisibleNotes().length === 0"
+  >
+    <div class="placeholder-content">
+      <div class="placeholder-icon">📋</div>
+      <h3>No notes yet</h3>
+      <p>
+        Create your first note to get started with organizing your thoughts.
+      </p>
+      <button class="btn btn-primary" (click)="createNewNote()">
+        Create First Note
+      </button>
     </div>
   </div>
 </div>
