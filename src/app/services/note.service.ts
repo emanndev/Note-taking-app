@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Note } from '../models/note.interface';
 import { v4 as uuidv4 } from 'uuid';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { map, tap } from 'rxjs/operators';
 })
 export class NoteService {
   private notes: Note[] = [];
-  private readonly STORAGE_KEY = 'notes-app-data';
+  private readonly STORAGE_KEY = 'notes';
   private readonly notesData = 'notes-data.json';
   private notesSubject = new BehaviorSubject<Note[]>([]);
   public notes$ = this.notesSubject.asObservable();
@@ -19,15 +19,20 @@ export class NoteService {
   private selectedNoteIdSubject = new BehaviorSubject<string | null>(null);
   public selectedNoteId$ = this.selectedNoteIdSubject.asObservable();
 
+  // Add the notesChanged Subject for compatibility
+  private notesChangedSubject = new Subject<void>();
+  public notesChanged = this.notesChangedSubject.asObservable();
+
   constructor(private http: HttpClient) {
     this.loadNotes();
   }
 
   private saveNotes() {
     try {
-      const notesData = JSON.stringify(this.notes);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.notes));
       console.log('Notes saved to storage:', this.notes.length, 'notes');
       this.notesSubject.next([...this.notes]);
+      this.notesChangedSubject.next(); // Notify subscribers of changes
       this.updateFilteredNotes();
     } catch (error) {
       console.error('Failed to save notes:', error);
@@ -36,7 +41,7 @@ export class NoteService {
 
   private loadNotes() {
     try {
-      const storedNotes = null;
+      const storedNotes = localStorage.getItem(this.STORAGE_KEY);
 
       if (storedNotes) {
         this.notes = JSON.parse(storedNotes);

@@ -27,11 +27,15 @@ export const routes: Routes = [
       {
         path: 'notes',
         component: NotesDashboardComponent,
-        // canActivate: [authGuard],
+        children: [
+          {
+            path: ':id',
+            component: NotesDashboardComponent,
+          },
+        ],
       },
-      { path: 'notes/:id', component: NoteDetailsComponent },
-      { path: 'create', component: NoteCreateComponent },
       { path: 'archived', component: ArchivedNotesComponent },
+      { path: 'create', component: NoteCreateComponent },
       { path: 'settings', component: SettingsComponent },
     ],
   },
