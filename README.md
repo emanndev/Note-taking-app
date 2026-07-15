@@ -1,59 +1,59 @@
-# AngularNoteTakingAppV2
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+# Project Title
 
-## Development server
+Angular Note Taking App V2
 
-To start a local development server, run:
+## Description
 
-```bash
-ng serve
-```
+This is an Angular-based note-taking application that allows users to create, edit, and manage their notes. It provides features such as note organization, archiving, and customization. The app is built using Angular, Firebase for authentication and database storage, and other Angular libraries.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Installation
 
-## Code scaffolding
+To get started with the Angular Note Taking App, follow these steps:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Clone the repository: `git clone https://github.com/your-username/angular-note-taking-app-v2.git`
+2. Navigate to the project directory: `cd angular-note-taking-app-v2`
+3. Install dependencies: `npm install`
+4. Start the development server: `ng serve`
 
-```bash
-ng generate component component-name
-```
+## Usage
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To use the Angular Note Taking App, follow these steps:
 
-```bash
-ng generate --help
-```
+1. Open your browser and navigate to `http://localhost:4200/`
+2. Sign up or log in using your email and password.
+3. Start creating, editing, and managing your notes.
+4. Use the sidebar to switch between different views (Dashboard, Notes List, Archived Notes).
+5. Customize your app's color theme in the Settings section.
 
-## Building
+## Features
 
-To build the project run:
+- Create, edit, and manage notes.
+- Organize notes using tags and categories.
+- Archive and restore notes.
+- Customize color theme.
+- Responsive design for mobile and desktop.
 
-```bash
-ng build
-```
+## Technologies Used
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Angular
+- Firebase
+- TypeScript
+- SCSS
+- Angular Router
+- Angular Forms
+- Angular Material (for UI components)
 
-## Running unit tests
+## Contributing
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Contributions are welcome! If you'd like to contribute to this project, please follow these steps:
 
-```bash
-ng test
-```
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make your changes and commit them: `git commit -m "Add your feature"`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Submit a pull request.
 
-## Running end-to-end tests
+## License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+No license
