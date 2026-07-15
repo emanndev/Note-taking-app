@@ -18,7 +18,7 @@ To get started with the Angular Note Taking App, follow these steps:
 
 ## Deployment
 
-Deployed through AWS Amplify Hosting Service
+Deployed through AWS Amplify Hosting Service ['https://production.d29h6ylgksfezm.amplifyapp.com/']
 
 ## Usage
 
