@@ -16,6 +16,10 @@ To get started with the Angular Note Taking App, follow these steps:
 3. Install dependencies: `npm install`
 4. Start the development server: `ng serve`
 
+## Deployment
+
+Deployed through AWS Amplify Hosting Service
+
 ## Usage
 
 To use the Angular Note Taking App, follow these steps:
