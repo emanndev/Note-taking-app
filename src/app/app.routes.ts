@@ -9,7 +9,7 @@ import { NoteCreateComponent } from './components/note-create/note-create.compon
 import { SettingsComponent } from './components/settings/settings.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-// import { authGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   // Auth routes
@@ -22,7 +22,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: 'notes',
