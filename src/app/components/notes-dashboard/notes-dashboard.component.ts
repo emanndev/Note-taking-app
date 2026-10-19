@@ -2,6 +2,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoteService } from '../../services/note.service';
+import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Note } from '../../models/note.interface';
@@ -27,7 +28,8 @@ export class NotesDashboardComponent implements OnInit {
   constructor(
     public noteService: NoteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -138,7 +140,7 @@ export class NotesDashboardComponent implements OnInit {
     if (this.selectedNote) {
       this.noteService.updateNote(this.selectedNote);
       this.originalNote = { ...this.selectedNote };
-      console.log('Note saved successfully');
+      this.toastService.success('Note saved successfully!');
     }
   }
 
@@ -173,6 +175,7 @@ export class NotesDashboardComponent implements OnInit {
   archiveNote(id: string) {
     if (confirm('Are you sure you want to archive this note?')) {
       this.noteService.archiveNote(id, true);
+      this.toastService.info('Note archived.');
       // Navigate to the next available note or notes list
       const notes = this.noteService.getNotes();
       if (notes.length > 0) {
@@ -190,6 +193,7 @@ export class NotesDashboardComponent implements OnInit {
       )
     ) {
       this.noteService.deleteNote(id);
+      this.toastService.success('Note deleted.');
       // Navigate to the next available note or notes list
       const notes = this.noteService.getNotes();
       if (notes.length > 0) {

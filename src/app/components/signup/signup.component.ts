@@ -8,12 +8,12 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { ToastComponent } from '../toast/toast.component';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink, ToastComponent],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrls: ['../../shared/auth.component.scss'],
 })
@@ -21,14 +21,13 @@ export class SignupComponent {
   signupForm: FormGroup;
   formPassword: string = '';
   showformPassword: boolean = false;
-  showToast = false;
-  toastMessage = '';
   isLoading = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastService: ToastService
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,20 +36,21 @@ export class SignupComponent {
   }
 
   onSubmit() {
+    if (this.signupForm.invalid) return;
+
     this.isLoading = true;
     const { email, password } = this.signupForm.value;
     this.authService
       .signup(email, password)
       .then(() => {
-        this.toastMessage = 'Signup successful!';
-        this.showToast = true;
+        this.toastService.success('Signup successful! Please log in.');
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 1000);
+        }, 800);
       })
       .catch((error) => {
         console.error('Signup failed', error);
-        alert('Invalid credentials or user already exists.');
+        this.toastService.error('Invalid credentials or user already exists.');
       })
       .finally(() => (this.isLoading = false));
   }

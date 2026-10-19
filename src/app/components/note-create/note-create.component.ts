@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NoteService } from '../../services/note.service';
+import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -23,7 +24,11 @@ export class NoteCreateComponent {
     lastEdited: new Date(),
   };
 
-  constructor(private noteService: NoteService, private router: Router) {}
+  constructor(
+    private noteService: NoteService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   addTagsFromInput(tagsString: string) {
     if (!tagsString.trim()) return;
@@ -73,7 +78,7 @@ export class NoteCreateComponent {
 
   saveNote() {
     if (!this.note.title.trim()) {
-      alert('Please enter a title for your note.');
+      this.toastService.warning('Please enter a title for your note.');
       return;
     }
 
@@ -88,6 +93,7 @@ export class NoteCreateComponent {
     };
 
     const savedNote = this.noteService.createNote(noteToSave);
+    this.toastService.success('Note created successfully!');
 
     // Navigate to the newly created note
     this.router.navigate(['/dashboard/notes', savedNote.id]);

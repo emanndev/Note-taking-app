@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -25,13 +26,14 @@ export class ResetPasswordComponent implements OnInit {
   isLoading: boolean = false;
   isSuccess: boolean = false;
 
-  private oobCode: string | null = null;
+  public oobCode: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {
     this.form = this.fb.group(
       {
@@ -50,6 +52,7 @@ export class ResetPasswordComponent implements OnInit {
       this.message =
         'Invalid or expired reset link. Please request a new one.';
       this.isSuccess = false;
+      this.toastService.error('Invalid or expired reset link.');
     }
   }
 
@@ -71,11 +74,13 @@ export class ResetPasswordComponent implements OnInit {
       await this.authService.confirmPasswordReset(this.oobCode, newPassword);
       this.isSuccess = true;
       this.message = 'Password reset successfully! Redirecting to login...';
+      this.toastService.success('Password reset successfully!');
       this.form.reset();
-      setTimeout(() => this.router.navigate(['/login']), 3000);
+      setTimeout(() => this.router.navigate(['/login']), 2000);
     } catch (error: any) {
       this.isSuccess = false;
       this.message = this.getFriendlyError(error.code);
+      this.toastService.error(this.message);
     } finally {
       this.isLoading = false;
     }

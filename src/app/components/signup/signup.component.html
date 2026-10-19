@@ -4,9 +4,6 @@
     <h2>Create Your Account</h2>
     <p>Sign up to start organizing your notes and boost your productivity.</p>
 
-    <!-- toaster message -->
-    <app-toast [message]="toastMessage" [show]="showToast" />
-
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <label>Email Address</label>
       <input
@@ -33,9 +30,6 @@
         <input
           id="formPassword"
           [type]="showformPassword ? 'text' : 'password'"
-          [(ngModel)]="formPassword"
-          name="formPassword"
-          type="password"
           placeholder="Password"
           formControlName="password"
         />
@@ -66,7 +60,7 @@
         At least 8 characters
       </p>
 
-      <button type="submit" [disabled]="signupForm.invalid">Sign up</button>
+      <button type="submit" [disabled]="signupForm.invalid || isLoading">Sign up</button>
     </form>
     <!-- loading spinner -->
     <div class="spinner" *ngIf="isLoading"></div>
