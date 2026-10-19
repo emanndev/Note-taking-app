@@ -5,8 +5,9 @@
     <p>Sign up to start organizing your notes and boost your productivity.</p>
 
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <label>Email Address</label>
+      <label for="signupEmail">Email Address</label>
       <input
+        id="signupEmail"
         type="email"
         placeholder="email@example.com"
         formControlName="email"
@@ -25,7 +26,7 @@
         Please enter a valid email address.
       </div>
 
-      <label>Password</label>
+      <label for="formPassword">Password</label>
       <div class="password-wrapper">
         <input
           id="formPassword"
@@ -60,17 +61,24 @@
         At least 8 characters
       </p>
 
-      <button type="submit" [disabled]="signupForm.invalid || isLoading">Sign up</button>
+      <button type="submit" [disabled]="signupForm.invalid || isLoading || isGoogleLoading">
+        {{ isLoading ? 'Creating Account...' : 'Sign up' }}
+      </button>
     </form>
     <!-- loading spinner -->
-    <div class="spinner" *ngIf="isLoading"></div>
+    <div class="spinner" *ngIf="isLoading || isGoogleLoading"></div>
 
     <div class="divider">Or log in with:</div>
-    <button class="google-btn">
+    <button
+      type="button"
+      class="google-btn"
+      (click)="loginWithGoogle()"
+      [disabled]="isLoading || isGoogleLoading"
+    >
       <span class="g-icon"
         ><img src="/assets/images/icon-google.svg" alt="google-icon"
       /></span>
-      Google
+      {{ isGoogleLoading ? 'Connecting to Google...' : 'Google' }}
     </button>
 
     <p class="auth-footer">

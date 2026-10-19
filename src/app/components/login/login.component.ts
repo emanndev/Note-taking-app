@@ -20,6 +20,7 @@ import { ToastService } from '../../services/toast.service';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
+  isGoogleLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +63,11 @@ export class LoginComponent {
       .catch((error) => {
         console.error('Login failed', error);
         let message = 'Invalid credentials or user does not exist.';
-        if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+        if (
+          error.code === 'auth/wrong-password' ||
+          error.code === 'auth/user-not-found' ||
+          error.code === 'auth/invalid-credential'
+        ) {
           message = 'Invalid email or password.';
         } else if (error.code === 'auth/too-many-requests') {
           message = 'Too many attempts. Please try again later.';
@@ -70,5 +75,40 @@ export class LoginComponent {
         this.toastService.error(message);
       })
       .finally(() => (this.isLoading = false));
+  }
+
+  loginWithGoogle() {
+    if (this.isGoogleLoading || this.isLoading) return;
+
+    this.isGoogleLoading = true;
+    const rememberMe = !!this.loginForm.get('rememberMe')?.value;
+
+    this.authService
+      .loginWithGoogle(rememberMe)
+      .then(() => {
+        this.toastService.success('Google sign-in successful! Welcome.');
+        const returnUrl =
+          this.route.snapshot.queryParams['returnUrl'] || '/dashboard/notes';
+        setTimeout(() => {
+          this.router.navigateByUrl(returnUrl);
+        }, 600);
+      })
+      .catch((error) => {
+        console.error('Google sign-in error:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+          this.toastService.info('Google sign-in was canceled.');
+        } else if (error.code === 'auth/popup-blocked') {
+          this.toastService.error(
+            'Sign-in popup was blocked by your browser. Please allow popups for this site.'
+          );
+        } else if (error.code === 'auth/cancelled-popup-request') {
+          // A newer popup was opened, ignore
+        } else {
+          this.toastService.error(
+            error.message || 'Google sign-in failed. Please try again.'
+          );
+        }
+      })
+      .finally(() => (this.isGoogleLoading = false));
   }
 }

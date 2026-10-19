@@ -48,19 +48,24 @@
         </label>
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid || isLoading">
+      <button type="submit" [disabled]="loginForm.invalid || isLoading || isGoogleLoading">
         {{ isLoading ? 'Logging in...' : 'Login' }}
       </button>
     </form>
     <!-- loading spinner -->
-    <div class="spinner" *ngIf="isLoading"></div>
+    <div class="spinner" *ngIf="isLoading || isGoogleLoading"></div>
 
     <div class="divider">Or log in with:</div>
-    <button class="google-btn">
+    <button
+      type="button"
+      class="google-btn"
+      (click)="loginWithGoogle()"
+      [disabled]="isLoading || isGoogleLoading"
+    >
       <span class="g-icon"
         ><img src="/assets/images/icon-google.svg" alt="google-icon"
       /></span>
-      Google
+      {{ isGoogleLoading ? 'Connecting to Google...' : 'Google' }}
     </button>
 
     <p class="auth-footer">

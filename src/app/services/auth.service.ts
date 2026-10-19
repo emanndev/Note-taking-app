@@ -17,6 +17,8 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
   UserCredential,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -40,6 +42,17 @@ export class AuthService {
       ? browserLocalPersistence
       : browserSessionPersistence;
     await setPersistence(this.auth, persistence);
+  }
+
+  /**
+   * Signs in a user using Google OAuth popup.
+   * Configures persistence and prompts account selection.
+   */
+  async loginWithGoogle(rememberMe: boolean = true): Promise<UserCredential> {
+    await this.setSessionPersistence(rememberMe);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    return signInWithPopup(this.auth, provider);
   }
 
   /**
