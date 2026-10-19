@@ -19,7 +19,6 @@ import { ToastService } from '../../services/toast.service';
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  formPassword: string = '';
   showformPassword: boolean = false;
   isLoading = false;
 
@@ -40,17 +39,28 @@ export class SignupComponent {
 
     this.isLoading = true;
     const { email, password } = this.signupForm.value;
+
     this.authService
       .signup(email, password)
       .then(() => {
-        this.toastService.success('Signup successful! Please log in.');
+        this.toastService.success(
+          'Account created! A verification link has been sent to your email.'
+        );
         setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 800);
+          this.router.navigate(['/verify-email']);
+        }, 700);
       })
       .catch((error) => {
         console.error('Signup failed', error);
-        this.toastService.error('Invalid credentials or user already exists.');
+        let message = 'Signup failed. Please try again.';
+        if (error.code === 'auth/email-already-in-use') {
+          message = 'An account with this email address already exists.';
+        } else if (error.code === 'auth/invalid-email') {
+          message = 'The email address is not valid.';
+        } else if (error.code === 'auth/weak-password') {
+          message = 'Password is too weak. Please use at least 8 characters.';
+        }
+        this.toastService.error(message);
       })
       .finally(() => (this.isLoading = false));
   }

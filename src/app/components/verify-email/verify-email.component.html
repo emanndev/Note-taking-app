@@ -1,0 +1,55 @@
+<div class="auth-container">
+  <div class="auth-card verify-card">
+    <img src="/assets/images/logo.svg" alt="Logo" class="logo" />
+
+    <div class="email-illustration">
+      <div class="icon-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </div>
+    </div>
+
+    <h2>Verify Your Email</h2>
+    <p class="subtitle">
+      We sent an email verification link to:
+    </p>
+
+    <div class="email-badge" *ngIf="userEmail">
+      <span>{{ userEmail }}</span>
+    </div>
+
+    <p class="instructions">
+      Please check your inbox (and spam folder) and click the link to activate your account and access your notes.
+    </p>
+
+    <div class="verify-actions">
+      <button
+        type="button"
+        class="primary-btn"
+        (click)="checkVerification()"
+        [disabled]="isChecking"
+      >
+        <span *ngIf="!isChecking">I've Verified My Email</span>
+        <span *ngIf="isChecking">Checking Status...</span>
+      </button>
+
+      <button
+        type="button"
+        class="secondary-btn"
+        (click)="resendVerification()"
+        [disabled]="isResending || resendCooldown > 0"
+      >
+        <span *ngIf="!isResending && resendCooldown === 0">Resend Verification Email</span>
+        <span *ngIf="isResending">Sending Link...</span>
+        <span *ngIf="resendCooldown > 0">Resend in {{ resendCooldown }}s</span>
+      </button>
+    </div>
+
+    <p class="auth-footer">
+      Using a different account?
+      <a href="javascript:void(0)" (click)="logout()">Sign Out</a>
+    </p>
+  </div>
+</div>

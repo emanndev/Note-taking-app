@@ -5,8 +5,9 @@
     <p>Please log in to continue</p>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <label>Email Address</label>
+      <label for="email">Email Address</label>
       <input
+        id="email"
         type="email"
         placeholder="email@example.com"
         formControlName="email"
@@ -25,19 +26,31 @@
         Please enter a valid email address.
       </div>
 
-      <label
-        >Password
-        <a class="forgot-link" routerLink="/forgot-password">Forgot</a></label
-      >
+      <div class="password-label-row">
+        <label for="password">Password</label>
+        <a class="forgot-link" routerLink="/forgot-password">Forgot?</a>
+      </div>
       <div class="password-wrapper">
         <input
+          id="password"
           type="password"
           placeholder="Password"
           formControlName="password"
         />
       </div>
 
-      <button type="submit" [disabled]="loginForm.invalid || isLoading">Login</button>
+      <!-- Remember Me Checkbox -->
+      <div class="remember-row">
+        <label class="checkbox-container">
+          <input type="checkbox" formControlName="rememberMe" id="rememberMe" />
+          <span class="checkmark"></span>
+          <span class="label-text">Remember me</span>
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
     </form>
     <!-- loading spinner -->
     <div class="spinner" *ngIf="isLoading"></div>

@@ -7,16 +7,23 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isAuthenticated().pipe(
-    take(1), // complete after first emission so the guard doesn't stay subscribed
-    map((isAuth) => {
-      if (isAuth) {
-        return true;
+  return authService.user$.pipe(
+    take(1),
+    map((user) => {
+      // 1. If not logged in, redirect to /login
+      if (!user) {
+        return router.createUrlTree(['/login'], {
+          queryParams: { returnUrl: state.url },
+        });
       }
-      // Redirect to login, preserving the intended URL as a query param
-      return router.createUrlTree(['/login'], {
-        queryParams: { returnUrl: state.url },
-      });
+
+      // 2. If logged in but email is not verified, block access and redirect to /verify-email
+      if (!user.emailVerified) {
+        return router.createUrlTree(['/verify-email']);
+      }
+
+      // 3. User is authenticated and verified
+      return true;
     })
   );
 };
