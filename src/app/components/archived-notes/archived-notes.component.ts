@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NoteService } from '../../services/note.service';
+import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 import { Note } from '../../models/note.interface';
 import { Router, RouterLink } from '@angular/router';
@@ -15,7 +16,11 @@ export class ArchivedNotesComponent implements OnInit {
   archivedNotes: Note[] = [];
   selectedNote: Note | null = null;
 
-  constructor(public noteService: NoteService, private router: Router) {}
+  constructor(
+    public noteService: NoteService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.loadArchivedNotes();
@@ -39,6 +44,7 @@ export class ArchivedNotesComponent implements OnInit {
   restoreNote(id: string) {
     if (confirm('Are you sure you want to restore this note?')) {
       this.noteService.archiveNote(id, false);
+      this.toastService.success('Note restored to active notes!');
       this.loadArchivedNotes();
       // Clear selection if the restored note was selected
       if (this.selectedNote?.id === id) {
@@ -58,6 +64,7 @@ export class ArchivedNotesComponent implements OnInit {
       )
     ) {
       this.noteService.deleteNote(id);
+      this.toastService.info('Note permanently deleted.');
       this.loadArchivedNotes();
       // Clear selection if the deleted note was selected
       if (this.selectedNote?.id === id) {

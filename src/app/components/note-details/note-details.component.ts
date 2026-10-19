@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NoteService } from '../../services/note.service';
+import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Note } from '../../models/note.interface';
@@ -20,7 +21,8 @@ export class NoteDetailsComponent implements OnInit {
   constructor(
     public noteService: NoteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -62,7 +64,7 @@ export class NoteDetailsComponent implements OnInit {
     if (this.selectedNote) {
       this.noteService.updateNote(this.selectedNote);
       this.originalNote = { ...this.selectedNote };
-      console.log('Note saved successfully');
+      this.toastService.success('Note saved successfully!');
     }
   }
 
@@ -97,6 +99,7 @@ export class NoteDetailsComponent implements OnInit {
 
   archiveNote(id: string) {
     this.noteService.archiveNote(id, true);
+    this.toastService.info('Note archived.');
     const notes = this.noteService.getNotes();
     if (notes.length > 0) {
       this.router.navigate(['/dashboard/notes', notes[0].id]);
@@ -109,6 +112,7 @@ export class NoteDetailsComponent implements OnInit {
   deleteNote(id: string) {
     if (confirm('Are you sure you want to delete this note?')) {
       this.noteService.deleteNote(id);
+      this.toastService.success('Note deleted.');
       const notes = this.noteService.getNotes();
       if (notes.length > 0) {
         this.router.navigate(['/dashboard/notes', notes[0].id]);

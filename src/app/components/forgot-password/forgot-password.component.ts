@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,7 +23,11 @@ export class ForgotPasswordComponent {
   isLoading: boolean = false;
   isSuccess: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastService: ToastService
+  ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -41,10 +46,12 @@ export class ForgotPasswordComponent {
       await this.authService.sendPasswordResetEmail(email);
       this.isSuccess = true;
       this.message = 'A password reset link has been sent to your email!';
+      this.toastService.success('Password reset link sent to your email!');
       this.form.reset();
     } catch (error: any) {
       this.isSuccess = false;
       this.message = this.getFriendlyError(error.code);
+      this.toastService.error(this.message);
     } finally {
       this.isLoading = false;
     }
