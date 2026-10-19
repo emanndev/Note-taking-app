@@ -21,6 +21,7 @@ export class SignupComponent {
   signupForm: FormGroup;
   showformPassword: boolean = false;
   isLoading = false;
+  isGoogleLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -63,5 +64,37 @@ export class SignupComponent {
         this.toastService.error(message);
       })
       .finally(() => (this.isLoading = false));
+  }
+
+  loginWithGoogle() {
+    if (this.isGoogleLoading || this.isLoading) return;
+
+    this.isGoogleLoading = true;
+
+    this.authService
+      .loginWithGoogle(true)
+      .then(() => {
+        this.toastService.success('Google sign-in successful! Welcome to Note.');
+        setTimeout(() => {
+          this.router.navigate(['/dashboard/notes']);
+        }, 600);
+      })
+      .catch((error) => {
+        console.error('Google sign-up error:', error);
+        if (error.code === 'auth/popup-closed-by-user') {
+          this.toastService.info('Google sign-in was canceled.');
+        } else if (error.code === 'auth/popup-blocked') {
+          this.toastService.error(
+            'Sign-in popup was blocked by your browser. Please allow popups for this site.'
+          );
+        } else if (error.code === 'auth/cancelled-popup-request') {
+          // A newer popup was opened, ignore
+        } else {
+          this.toastService.error(
+            error.message || 'Google sign-in failed. Please try again.'
+          );
+        }
+      })
+      .finally(() => (this.isGoogleLoading = false));
   }
 }
